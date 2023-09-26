@@ -5,7 +5,7 @@ import { Link, NavLink } from 'react-router-dom';
 
 export default function Header() {
      return (
-          <header className='flex flex-row items-center justify-between px-32 max-w-full py-5'>
+          <header className='flex flex-row items-center justify-between px-32 max-w-full py-5 relative'>
                <img src={logo} alt="logo"
                     className='h-12'
                />
