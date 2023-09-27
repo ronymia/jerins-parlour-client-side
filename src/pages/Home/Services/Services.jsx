@@ -34,8 +34,8 @@ const services = [
 
 export default function Services() {
      return (
-          <div className='bg-white px-32 py-32'>
-               <h1 className='text-[#111430] font-bold text-4xl block text-center'>
+          <div className='bg-white px-32 py-32 w-full flex flex-col items-center justify-center'>
+               <h1 className='text-[#111430] font-bold text-4xl'>
                     Our Awesome <span className='text-primary'>Services</span>
                </h1>
 
@@ -44,7 +44,9 @@ export default function Services() {
                          services.map(service => <ServiceCard key={service.id} service={service} />)
                     }
                </div>
-
+               <button type="button"
+                    className='h-12 px-6 bg-primary text-white font-medium rounded-md mt-10'
+               >Explore more</button>
           </div>
      )
 }
