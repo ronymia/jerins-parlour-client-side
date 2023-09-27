@@ -4,7 +4,7 @@ import HeroBg from '../../../assets/images/beautiful-young-asian-woman-touching-
 
 export default function Hero() {
      return (
-          <div className="grid grid-cols-2 justify-center items-center px-32 py-5">
+          <div className="grid grid-cols-2 justify-center items-center px-32 py-5 mb-10">
                <div className=" flex flex-col items-start justify-center gap-y-6">
                     <h1 className='text-5xl font-bold text-[#111430] leading-normal'>BEAUTY SALON <br /> FOR EVERY WOMEN</h1>
                     <p className='text-[#666666] w-3/4'>
