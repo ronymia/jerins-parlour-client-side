@@ -1,7 +1,6 @@
 import React from 'react';
 
 export default function ServiceCard({ service }) {
-     console.log(service)
      const { image, name, price, describe } = service;
 
      return (
