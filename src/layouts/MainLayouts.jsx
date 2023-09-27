@@ -1,5 +1,5 @@
 import React from 'react';
-import { Header } from '../pages/Shared';
+import { Footer, Header } from '../pages/Shared';
 import { Outlet } from 'react-router-dom';
 
 export default function MainLayouts() {
@@ -7,6 +7,7 @@ export default function MainLayouts() {
           <>
                <Header />
                <Outlet />
+               <Footer />
           </>
      )
 }
