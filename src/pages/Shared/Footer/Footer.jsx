@@ -5,7 +5,7 @@ import { BsLinkedin, BsYoutube } from 'react-icons/bs';
 
 export default function Footer() {
      return (
-          <footer className="bg-primary h-[420px] grid grid-cols-3 gap-3 text-white px-32 py-20">
+          <footer className="bg-primary h-72 grid grid-cols-3 gap-3 text-white px-32 pt-14 pb-20">
                <div className="flex flex-row items-start justify-center gap-3">
                     <FaMapMarkerAlt
                          className="text-5xl"

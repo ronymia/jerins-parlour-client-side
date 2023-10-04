@@ -13,7 +13,7 @@ export default function Register() {
      }
 
      return (
-          <div className="w-[570px] border border-[#ABABAB] rounded px-10 py-5 bg-white mx-auto">
+          <div className="w-[570px] border border-[#ABABAB] rounded px-10 py-5 bg-white mx-auto my-5">
                <h1 className='text-2xl font-bold mt-5'>Create an account</h1>
                <form onSubmit={handleSubmit(onSubmit)}
                     className="flex flex-col gap-y-5 mt-6"
