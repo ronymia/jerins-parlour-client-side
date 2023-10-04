@@ -15,7 +15,8 @@ export default function Header() {
                          <NavLink>Our Portfolio</NavLink>
                          <NavLink>Our Team</NavLink>
                          <NavLink>Contact Us</NavLink>
-                         <Link className='h-11 w-24 bg-primary cursor-pointer rounded-md text-white flex justify-center items-center font-medium tracking-wider'>Login</Link>
+                         <Link to={"/auth/login"}
+                              className='h-11 w-24 bg-primary cursor-pointer rounded-md text-white flex justify-center items-center font-medium tracking-wider'>Login</Link>
                     </ul>
                </nav>
           </header>

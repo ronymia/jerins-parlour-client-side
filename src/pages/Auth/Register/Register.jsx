@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import SocialLogin from '../SocialLogin/SocialLogin';
 
 export default function Register() {
      const { register, handleSubmit, reset } = useForm();
@@ -52,6 +53,9 @@ export default function Register() {
                          className='text-primary ml-1 hover:underline'
                     >login here</Link>
                </p>
+
+               {/* social sign up */}
+               <SocialLogin />
           </div>
      )
 }
