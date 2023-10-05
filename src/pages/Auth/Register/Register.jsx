@@ -1,16 +1,32 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import { useAuth } from '../../../hooks';
 
 export default function Register() {
-     const { user } = useAuth();
-     console.log(user);
+     const navigate = useNavigate();
+     const { user, createNewUser } = useAuth();
      const { register, handleSubmit, reset } = useForm();
 
-     const onSubmit = (data) => {
-          console.log(data);
+     const userInfoSubmit = async (data) => {
+          const { email, password } = data;
+
+          //  create new user
+          await createNewUser(email, password)
+               .then(res => {
+                    // sign up user
+                    const user = res.user;
+
+                    if (user.uid) {
+                         navigate("/");
+                    }
+                    // console.log(user);
+               }).catch(error => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.log(errorCode);
+               })
 
           //clear form
           reset();
@@ -19,7 +35,7 @@ export default function Register() {
      return (
           <div className="w-[570px] border border-[#ABABAB] rounded px-10 py-5 bg-white mx-auto my-5">
                <h1 className='text-2xl font-bold mt-5'>Create an account</h1>
-               <form onSubmit={handleSubmit(onSubmit)}
+               <form onSubmit={handleSubmit(userInfoSubmit)}
                     className="flex flex-col gap-y-5 mt-6"
                >
                     <input type="text"
