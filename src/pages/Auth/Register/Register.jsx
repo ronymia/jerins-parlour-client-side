@@ -2,8 +2,11 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import SocialLogin from '../SocialLogin/SocialLogin';
+import { useAuth } from '../../../hooks';
 
 export default function Register() {
+     const { user } = useAuth();
+     console.log(user);
      const { register, handleSubmit, reset } = useForm();
 
      const onSubmit = (data) => {
