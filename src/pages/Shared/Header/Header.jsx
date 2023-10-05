@@ -1,11 +1,10 @@
-import React from 'react';
-//import logo
-import logo from '../../../assets/logo.png'
 import { Link, NavLink } from 'react-router-dom';
 import { useAuth } from '../../../hooks';
+//import logo
+import logo from '../../../assets/logo.png'
 
 export default function Header() {
-     const { user } = useAuth();
+     const { user, userSignOut } = useAuth();
 
      return (
           <header className='flex flex-row items-center justify-between px-32 max-w-full py-5 bg-[#FFF8F5]'>
@@ -20,7 +19,12 @@ export default function Header() {
                          <NavLink>Contact Us</NavLink>
                          {
                               user?.uid ?
-                                   <p className="text-xl font-medium text-black">{user?.displayName ? user.displayName : "no name"}</p>
+                                   <button type="button"
+                                        onClick={() => userSignOut()}
+                                        className="h-11 px-5 rounded-md bg-primary text-white font-medium"
+                                   >
+                                        log out
+                                   </button>
                                    :
                                    <Link to={"/auth/login"}
                                         className='h-11 w-24 bg-primary cursor-pointer rounded-md text-white flex justify-center items-center font-medium tracking-wider'>Login</Link>

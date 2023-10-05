@@ -4,9 +4,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import { useAuth } from '../../../hooks';
 
+// TODO : input field error 
+// register error 
+
 export default function Register() {
      const navigate = useNavigate();
-     const { user, createNewUser } = useAuth();
+     const { createNewUser } = useAuth();
      const { register, handleSubmit, reset } = useForm();
 
      const userInfoSubmit = async (data) => {
