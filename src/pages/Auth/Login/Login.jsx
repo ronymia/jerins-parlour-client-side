@@ -17,15 +17,11 @@ export default function Login() {
           await userSignIn(email, password)
                .then(res => {
                     // user sign in
-                    const user = res.user;
-
-                    if (user?.uid) {
+                    if (res.user?.uid) {
+                         //clear form
+                         reset();
                          navigate("/");
                     }
-
-                    //clear form
-                    reset();
-
                }).catch(error => {
                     const errorCode = error.code;
                     console.log(errorCode);

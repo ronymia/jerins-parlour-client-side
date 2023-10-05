@@ -9,30 +9,38 @@ import { useAuth } from '../../../hooks';
 
 export default function Register() {
      const navigate = useNavigate();
-     const { createNewUser } = useAuth();
+     const { createNewUser, updateUser } = useAuth();
      const { register, handleSubmit, reset } = useForm();
 
      const userInfoSubmit = async (data) => {
-          const { email, password } = data;
+          const { fullName, email, password } = data;
 
           //  create new user
           await createNewUser(email, password)
-               .then(res => {
+               .then(async (res) => {
                     // sign up user
-                    const user = res.user;
+                    // update user Name
+                    const userInfo = {
+                         displayName: fullName
+                    }
+                    await updateUser(userInfo)
+                         .then(res => {
+                              // Profile updated!
+                         }).catch(err => console.log(err));
 
-                    if (user.uid) {
+                    // user navigate
+                    if (res.user.uid) {
+                         //clear form
+                         reset();
                          navigate("/");
                     }
-                    // console.log(user);
                }).catch(error => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
                     console.log(errorCode);
-               })
+               });
 
-          //clear form
-          reset();
+
      }
 
      return (
