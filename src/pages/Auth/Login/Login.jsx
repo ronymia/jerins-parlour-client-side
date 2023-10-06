@@ -12,20 +12,18 @@ export default function Login() {
 
      const SignIn = async (data) => {
           const { email, password } = data;
-
           // user sign in
-          await userSignIn(email, password)
-               .then(res => {
-                    // user sign in
-                    if (res.user?.uid) {
-                         //clear form
-                         reset();
-                         navigate("/");
-                    }
-               }).catch(error => {
-                    const errorCode = error.code;
-                    console.log(errorCode);
-               })
+          try {
+               const { user } = await userSignIn(email, password);
+               if (user?.uid) {
+                    //clear form
+                    reset();
+                    navigate("/");
+               }
+          } catch (error) {
+               const errorCode = error.code;
+               console.log(errorCode);
+          }
      }
 
      return (

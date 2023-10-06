@@ -15,32 +15,27 @@ export default function Register() {
      const userInfoSubmit = async (data) => {
           const { fullName, email, password } = data;
 
-          //  create new user
-          await createNewUser(email, password)
-               .then(async (res) => {
-                    // sign up user
-                    // update user Name
-                    const userInfo = {
-                         displayName: fullName
-                    }
-                    await updateUser(userInfo)
-                         .then(res => {
-                              // Profile updated!
-                         }).catch(err => console.log(err));
+          try {
+               //  create new user
+               const { user } = await createNewUser(email, password);
 
-                    // user navigate
-                    if (res.user.uid) {
-                         //clear form
-                         reset();
-                         navigate("/");
-                    }
-               }).catch(error => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    console.log(errorCode);
-               });
+               // update user Name
+               const userInfo = {
+                    displayName: fullName
+               }
+               const updateUserData = await updateUser(userInfo);
 
-
+               // user navigate
+               if (user?.uid) {
+                    //clear form
+                    reset();
+                    navigate("/");
+               }
+          } catch (error) {
+               const errorCode = error.code;
+               const errorMessage = error.message;
+               // console.log(errorCode);
+          }
      }
 
      return (

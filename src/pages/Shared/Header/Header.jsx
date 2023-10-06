@@ -14,8 +14,8 @@ export default function Header() {
                <nav>
                     <ul className='flex flex-row items-center justify-center gap-x-5 text-[#474747]'>
                          <NavLink to={"/"}>Home</NavLink>
-                         <NavLink>Our Portfolio</NavLink>
-                         <NavLink>Our Team</NavLink>
+                         <NavLink>Services</NavLink>
+                         <NavLink>Testimonial</NavLink>
                          <NavLink>Contact Us</NavLink>
                          {
                               user?.uid ?
