@@ -1,7 +1,8 @@
 import React from 'react';
-import ServiceCard from './ServiceCard';
 import { useQuery } from 'react-query';
 import axios from 'axios';
+import ServiceCard from './ServiceCard';
+import DnaLoader from '../../Shared/Loader/DNALoader/DNALoader';
 
 
 export default function Services() {
@@ -13,6 +14,10 @@ export default function Services() {
                return data;
           }
      })
+
+     if (isLoading) {
+          return <DnaLoader />;
+     }
 
      return (
           <div className="bg-white px-32 py-32 w-full flex flex-col items-center justify-center">
