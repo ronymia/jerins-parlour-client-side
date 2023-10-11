@@ -1,19 +1,14 @@
 import React from 'react';
-import { useQuery } from 'react-query';
 import axios from 'axios';
+import { useQuery } from '@tanstack/react-query';
 import ServiceCard from './ServiceCard';
 import DnaLoader from '../../Shared/Loader/DNALoader/DNALoader';
+import useServices from '../../../apis/useServices';
 
 
 export default function Services() {
 
-     const { data: services = [], isLoading } = useQuery({
-          queryKey: ["services"],
-          queryFn: async () => {
-               const { data } = await axios.get("/services");
-               return data;
-          }
-     })
+     const { data: services = [], isLoading } = useServices();
 
      if (isLoading) {
           return <DnaLoader />;
