@@ -53,6 +53,7 @@ const AuthProvider = ({ children }) => {
 
                // set current user
                setUser(currentUser);
+               setLoading(false);
           })
 
           // clean up

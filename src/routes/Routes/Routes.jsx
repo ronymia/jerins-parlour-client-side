@@ -4,12 +4,17 @@ import MainLayouts from "../../layouts/MainLayouts";
 // import Home from "../../pages/Home/Home/Home";
 import { Login, Register } from "../../pages/Auth";
 import DnaLoader from "../../pages/Shared/Loader/DNALoader/DNALoader";
-import Booking from "../../pages/Home/Booking/Booking";
+import Booking, { loader as bookingLoader } from "../../pages/Home/Booking/Booking";
+import getSingleServiceById from "../../apis/getSingleServiceById";
+import { QueryClient } from "@tanstack/react-query";
 // import Booking from "../../pages/UserDashboard/Booking/Booking";
 // import DashboardLayout from "../../layouts/DashboardLayout";
 
 const Home = lazy(() => import("../../pages/Home/Home/Home"));
 const DashboardLayout = lazy(() => import("../../layouts/DashboardLayout"));
+
+
+const queryClient = new QueryClient();
 
 export const router = createBrowserRouter([
      {
@@ -31,8 +36,12 @@ export const router = createBrowserRouter([
                     element: <Register />
                },
                {
-                    path: "/booking/:bookingId",
-                    element: <Booking />
+                    path: "/booking/:serviceId",
+                    // loader: async ({ params }) => fetch(`http://localhost:5000/booking/${params.serviceId}`),
+                    loader: bookingLoader(queryClient),
+                    element: <Suspense fallback={<DnaLoader />}>
+                         <Booking />
+                    </Suspense>
                }
           ]
      },

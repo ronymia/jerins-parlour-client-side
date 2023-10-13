@@ -1,28 +1,51 @@
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../../hooks";
-import { useParams } from "react-router-dom";
-import useServices from "../../../apis/useServices";
+import { useLoaderData, useParams } from "react-router-dom";
+import DnaLoader from "../../Shared/Loader/DNALoader/DNALoader";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
-const Booking = () => {
-     const { bookingId } = useParams();
+
+const bookingQuery = (serviceId) => ({
+     queryKey: ["booking", serviceId],
+     queryFn: async () => {
+          const { data } = await axios.get(`/booking/${serviceId}`);
+          return data;
+     }
+})
+
+
+export const loader = (queryClient) => async ({ params }) => {
+     const query = bookingQuery(params.serviceId);
+     return (
+          queryClient.getQueryData(query.queryKey) ??
+          (await queryClient.fetchQuery(query))
+     )
+}
+
+
+
+
+
+export default function Booking() {
      const { user } = useAuth();
+     const { serviceId } = useParams();
+     const { data: service } = useQuery(bookingQuery(serviceId));
+
+
      const { register, handleSubmit } = useForm({
           defaultValues: {
                name: user?.displayName,
-               email: user?.email
+               email: user?.email,
+               serviceName: service?.name,
+               serviceCharge: service?.price
           }
      });
 
-     const { data: services = [], isLoading } = useServices();
-
-     if (isLoading) {
-          return <DnaLoader />;
-     }
 
      const onHandleBooking = async (data) => {
           console.log(data);
-     }
-     console.log(user)
+     };
 
 
      return (
@@ -37,8 +60,7 @@ const Booking = () => {
                          >Your Name</label>
                          <input type="text"
                               className="h-11 rounded-md focus:outline-none px-3 text-sm font-medium"
-                              {...register("name")}
-                         />
+                              {...register("name")} />
                     </div>
 
                     <div className="flex flex-col gap-y-2">
@@ -46,9 +68,9 @@ const Booking = () => {
                               className="text-[#899694] text-sm"
                          >Your email</label>
                          <input type="email"
-                              className="h-11 rounded-md focus:outline-none px-3 text-sm font-medium"
-                              {...register("email")}
-                         />
+                              disabled
+                              className="h-11 rounded-md focus:outline-none px-3 text-sm font-medium cursor-not-allowed"
+                              {...register("email")} />
                     </div>
 
                     <div className="flex flex-col gap-y-2">
@@ -56,19 +78,28 @@ const Booking = () => {
                               className="text-[#899694] text-sm"
                          >Service Name</label>
                          <input type="text"
-                              className="h-11 rounded-md focus:outline-none px-3 text-sm font-medium"
-                              {...register("serviceName")}
-                         />
+                              className="h-11 rounded-md focus:outline-none px-3 text-sm font-medium cursor-not-allowed"
+                              disabled
+                              {...register("serviceName")} />
                     </div>
 
                     <div className="flex flex-col gap-y-2">
                          <label htmlFor="serviceCharge"
                               className="text-[#899694] text-sm"
                          >Your Service  charged will be </label>
-                         <input type="text"
+                         <input type="number"
+                              className="h-11 rounded-md focus:outline-none px-3 text-sm font-medium cursor-not-allowed placeholder:"
+                              disabled
+                              {...register("serviceCharge")} />
+                    </div>
+
+                    <div className="flex flex-col gap-y-2">
+                         <label htmlFor="serviceCharge"
+                              className="text-[#899694] text-sm"
+                         >Your Number</label>
+                         <input type="number"
                               className="h-11 rounded-md focus:outline-none px-3 text-sm font-medium"
-                              {...register("serviceName")}
-                         />
+                              {...register("phoneNumber")} />
                     </div>
 
                     <button type="submit"
@@ -78,7 +109,5 @@ const Booking = () => {
                     </button>
                </form>
           </div>
-     )
+     );
 }
-
-export default Booking;

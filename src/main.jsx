@@ -3,9 +3,10 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import { RouterProvider } from 'react-router-dom';
 import AuthProvider from './contexts/AuthProvider';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider, } from '@tanstack/react-query';
 import axios from 'axios';
 import { router } from './routes/Routes/Routes.jsx';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 //TODO : change it from .env
 // base url 
@@ -15,9 +16,9 @@ axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
-    },
-  },
+      suspense: true
+    }
+  }
 });
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -26,6 +27,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <AuthProvider>
         <RouterProvider router={router} />
       </AuthProvider>
+      <ReactQueryDevtools position="bottom-right" />
     </QueryClientProvider>
   </React.StrictMode>,
 )

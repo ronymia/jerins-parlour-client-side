@@ -1,6 +1,4 @@
 import React from 'react';
-import axios from 'axios';
-import { useQuery } from '@tanstack/react-query';
 import ServiceCard from './ServiceCard';
 import DnaLoader from '../../Shared/Loader/DNALoader/DNALoader';
 import useServices from '../../../apis/useServices';
