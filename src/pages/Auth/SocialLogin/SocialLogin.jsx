@@ -2,13 +2,20 @@ import React from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { FaFacebook } from 'react-icons/fa';
 import { useAuth } from '../../../hooks';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const SocialLogin = () => {
+     const navigate = useNavigate();
+     const location = useLocation();
      const { signInWithGoogle } = useAuth();
+
+     const from = location.state?.from?.pathname || "/";
 
      const googleHandle = async () => {
           const { user } = await signInWithGoogle();
-          // console.log(user);
+          if (user) {
+               navigate(from, { replace: true });
+          }
      }
 
      return (

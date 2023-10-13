@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import { useAuth } from '../../../hooks';
 
@@ -9,8 +9,11 @@ import { useAuth } from '../../../hooks';
 
 export default function Register() {
      const navigate = useNavigate();
+     const location = useLocation();
      const { createNewUser, updateUser } = useAuth();
      const { register, handleSubmit, reset } = useForm();
+
+     const from = location.state?.from?.pathname || "/";
 
      const userInfoSubmit = async (data) => {
           const { fullName, email, password } = data;
@@ -29,7 +32,7 @@ export default function Register() {
                if (user?.uid) {
                     //clear form
                     reset();
-                    navigate("/");
+                    navigate(from, { replace: true });
                }
           } catch (error) {
                const errorCode = error.code;

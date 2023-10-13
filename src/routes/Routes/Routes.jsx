@@ -7,6 +7,7 @@ import { Login, Register } from "../../pages/Auth";
 import DnaLoader from "../../pages/Shared/Loader/DNALoader/DNALoader";
 import Booking, { loader as bookingLoader } from "../../pages/Home/Booking/Booking";
 import { loader as servicesLoader } from "../../pages/Home/Services/Services";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
 // import Booking from "../../pages/UserDashboard/Booking/Booking";
 // import DashboardLayout from "../../layouts/DashboardLayout";
 
@@ -40,7 +41,7 @@ export const router = createBrowserRouter([
                     path: "/booking/:serviceId",
                     loader: bookingLoader(queryClient),
                     element: <Suspense fallback={<DnaLoader />}>
-                         <Booking />
+                         <PrivateRoute> <Booking /></PrivateRoute>
                     </Suspense>
                }
           ]

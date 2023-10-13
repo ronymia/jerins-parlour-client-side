@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import { useAuth } from '../../../hooks';
 
@@ -7,8 +7,11 @@ import { useAuth } from '../../../hooks';
 
 export default function Login() {
      const navigate = useNavigate();
+     const location = useLocation();
      const { userSignIn } = useAuth();
      const { register, handleSubmit, reset } = useForm();
+
+     const from = location.state?.from?.pathname || "/";
 
      const SignIn = async (data) => {
           const { email, password } = data;
@@ -18,7 +21,7 @@ export default function Login() {
                if (user?.uid) {
                     //clear form
                     reset();
-                    navigate("/");
+                    navigate(from, { replace: true });
                }
           } catch (error) {
                const errorCode = error.code;
