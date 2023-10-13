@@ -9,7 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 const bookingQuery = (serviceId) => ({
      queryKey: ["booking", serviceId],
      queryFn: async () => {
-          const { data } = await axios.get(`/booking/${serviceId}`);
+          const { data } = await axios.get(`/service/${serviceId}`);
           return data;
      }
 })
@@ -27,7 +27,7 @@ export const loader = (queryClient) => async ({ params }) => {
 
 
 
-export default function Booking() {
+export default function Service() {
      const { user } = useAuth();
      const { serviceId } = useParams();
      const { data: service } = useQuery(bookingQuery(serviceId));
@@ -45,6 +45,8 @@ export default function Booking() {
 
      const onHandleBooking = async (data) => {
           console.log(data);
+
+
      };
 
 

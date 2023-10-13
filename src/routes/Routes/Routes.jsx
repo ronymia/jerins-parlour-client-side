@@ -1,21 +1,24 @@
-import { Suspense, lazy } from "react";
+import { Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import { QueryClient } from "@tanstack/react-query";
 import MainLayouts from "../../layouts/MainLayouts";
-// import Home from "../../pages/Home/Home/Home";
+import Home from "../../pages/Home/Home/Home";
 import { Login, Register } from "../../pages/Auth";
+import Service, {
+     loader as serviceLoader
+} from "../../pages/Home/Service/Service";
+import { loader as allServicesLoader } from "../../pages/Home/Services/Services";
 import DnaLoader from "../../pages/Shared/Loader/DNALoader/DNALoader";
-import Booking, { loader as bookingLoader } from "../../pages/Home/Booking/Booking";
-import { loader as servicesLoader } from "../../pages/Home/Services/Services";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
-// import Booking from "../../pages/UserDashboard/Booking/Booking";
-// import DashboardLayout from "../../layouts/DashboardLayout";
 
-const Home = lazy(() => import("../../pages/Home/Home/Home"));
-const DashboardLayout = lazy(() => import("../../layouts/DashboardLayout"));
+
+
+
 
 
 const queryClient = new QueryClient();
+
+
 
 export const router = createBrowserRouter([
      {
@@ -24,7 +27,7 @@ export const router = createBrowserRouter([
           children: [
                {
                     index: true,
-                    loader: servicesLoader(queryClient),
+                    loader: allServicesLoader(queryClient),
                     element: <Suspense fallback={<DnaLoader />}>
                          <Home />
                     </Suspense>
@@ -38,18 +41,12 @@ export const router = createBrowserRouter([
                     element: <Register />
                },
                {
-                    path: "/booking/:serviceId",
-                    loader: bookingLoader(queryClient),
+                    path: "/service/:serviceId",
+                    loader: serviceLoader(queryClient),
                     element: <Suspense fallback={<DnaLoader />}>
-                         <PrivateRoute> <Booking /></PrivateRoute>
+                         <PrivateRoute> <Service /></PrivateRoute>
                     </Suspense>
                }
           ]
-     },
-     {
-          path: "dashboard",
-          element: <Suspense fallback={<DnaLoader />}>
-               <DashboardLayout />
-          </Suspense>
      }
 ]);
