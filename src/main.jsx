@@ -16,7 +16,8 @@ axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      suspense: true
+      suspense: true,
+      staleTime: 1000 * 10,
     }
   }
 });

@@ -16,7 +16,7 @@ const bookingQuery = (serviceId) => ({
 
 
 export const loader = (queryClient) => async ({ params }) => {
-     const query = bookingQuery(params.serviceId);
+     const query = await bookingQuery(params.serviceId);
      return (
           queryClient.getQueryData(query.queryKey) ??
           (await queryClient.fetchQuery(query))

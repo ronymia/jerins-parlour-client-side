@@ -1,16 +1,31 @@
 import React from 'react';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 import ServiceCard from './ServiceCard';
-import DnaLoader from '../../Shared/Loader/DNALoader/DNALoader';
-import useServices from '../../../apis/useServices';
+
+
+
+
+const getServices = () => ({
+     queryKey: ["services"],
+     queryFn: async () => {
+          const { data } = await axios.get("/services");
+          return data;
+     }
+})
+
+export const loader = (queryClient) => async () => {
+     const query = await getServices();
+     return (
+          queryClient.getQueryData(query.queryKey) ??
+          (await queryClient.fetchQuery(query))
+     )
+}
+
 
 
 export default function Services() {
-
-     const { data: services = [], isLoading } = useServices();
-
-     if (isLoading) {
-          return <DnaLoader />;
-     }
+     const { data: services = [] } = useQuery(getServices());
 
      return (
           <div className="bg-white px-32 py-32 w-full flex flex-col items-center justify-center">

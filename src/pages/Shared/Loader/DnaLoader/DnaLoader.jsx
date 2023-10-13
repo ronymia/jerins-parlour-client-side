@@ -2,13 +2,15 @@ import { Dna } from 'react-loader-spinner';
 
 export default function DnaLoader() {
      return (
-          <Dna
-               visible={true}
-               height="80"
-               width="80"
-               ariaLabel="dna-loading"
-               wrapperStyle={{}}
-               wrapperClass="dna-wrapper"
-          />
+          <div className="w-full h-full flex items-center justify-center">
+               <Dna
+                    visible={true}
+                    height="400"
+                    width="400"
+                    ariaLabel="dna-loading"
+                    wrapperStyle={{}}
+                    wrapperClass="dna-wrapper"
+               />
+          </div>
      )
 }
