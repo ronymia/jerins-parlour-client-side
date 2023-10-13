@@ -1,9 +1,8 @@
 import { useForm } from "react-hook-form";
-import { useAuth } from "../../../hooks";
-import { useLoaderData, useParams } from "react-router-dom";
-import DnaLoader from "../../Shared/Loader/DNALoader/DNALoader";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import { useAuth } from "../../../hooks";
 
 
 const bookingQuery = (serviceId) => ({
@@ -44,8 +43,21 @@ export default function Service() {
 
 
      const onHandleBooking = async (data) => {
-          console.log(data);
+          const { name, email, phoneNumber, serviceName, serviceCharge } = data;
 
+          const booked = {
+               appointmentDate: new Date(),
+               bookedId: service._id,
+               treatment: serviceName,
+               price: serviceCharge,
+               number: phoneNumber,
+               name,
+               email
+          }
+
+          // booking new service
+          const res = await axios.post(`/bookings`, booked);
+          console.log(res)
 
      };
 
