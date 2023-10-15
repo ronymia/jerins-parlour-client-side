@@ -36,7 +36,9 @@ export default function BookingList() {
                          bookings.map(booked => <div key={booked._id}
                               className="flex flex-col gap-2 w-96 bg-white rounded-2xl relative">
                               <img src={booked.image} alt="serive image" className='w-20 m-6 ' />
-                              <p className="px-6 text-xl font-semibold text-[#111430] text-start">{booked.name}</p>
+                              <p className="px-6 text-xl font-semibold text-[#111430] text-start">
+                                   {booked.name}
+                              </p>
                               <p className="px-6 text-base text-[#606268] text-start">{booked.describe}</p>
                               <button type="button"
                                    className="h-11 w-full bg-primary text-white font-medium tracking-widest rounded-b-2xl"
