@@ -45,20 +45,18 @@ export default function Service() {
 
 
      const onHandleBooking = async (data) => {
-          const { name, email, phoneNumber, serviceName, serviceCharge } = data;
+          const { name, email, phoneNumber } = data;
 
-          const booked = {
-               appointmentDate: new Date(),
-               bookedId: service._id,
-               treatment: serviceName,
-               price: serviceCharge,
-               number: phoneNumber,
-               name,
-               email
-          }
+          let currentDate = new Date().toJSON().slice(0, 10);
+          let uniquId = new Date().getTime();
+          service.bookedId = uniquId;
+          service.email = email;
+          service.bookingDate = currentDate;
+          service.phoneNumber = phoneNumber;
+          service.patient = name;
 
           // booking new service
-          const res = await axios.post(`/bookings`, booked);
+          const res = await axios.post(`/bookings`, service);
           console.log(res)
           if (res.data.acknowledged) {
                MySwal.fire({
