@@ -19,7 +19,7 @@ export default function Header() {
                          <NavLink>Services</NavLink>
                          <NavLink>Testimonial</NavLink>
                          <NavLink>Contact Us</NavLink>
-                         <NavLink to={"/dashboard"}>Dashboard</NavLink>
+                         <NavLink to={"/dashboard/bookingList"}>Dashboard</NavLink>
                          {
                               user?.uid ?
                                    <button type="button"

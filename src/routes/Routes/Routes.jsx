@@ -10,6 +10,10 @@ import Service, {
 import { loader as allServicesLoader } from "../../pages/Home/Services/Services";
 import DnaLoader from "../../pages/Shared/Loader/DNALoader/DNALoader";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import Dashboard from "../../pages/Dashboard/Dhashboard/Dashboard";
+import BookingList from "../../pages/Dashboard/BookingList/BookingList";
+import Review from "../../pages/Dashboard/Review/Review";
+import History from "../../pages/Dashboard/History/History";
 
 
 
@@ -46,7 +50,25 @@ export const router = createBrowserRouter([
                     element: <Suspense fallback={<DnaLoader />}>
                          <PrivateRoute> <Service /></PrivateRoute>
                     </Suspense>
-               }
+               },
+               {
+                    path: "/dashboard",
+                    element: <Dashboard />,
+                    children: [
+                         {
+                              path: "/dashboard/bookingList",
+                              element: <BookingList />
+                         },
+                         {
+                              path: "/dashboard/review",
+                              element: <Review />
+                         },
+                         {
+                              path: "/dashboard/history",
+                              element: <History />
+                         },
+                    ]
+               },
           ]
      }
 ]);

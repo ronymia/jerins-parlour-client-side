@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "../../../hooks";
+import Swal from "sweetalert2";
+import withReactContent from 'sweetalert2-react-content'
 
 
 const bookingQuery = (serviceId) => ({
@@ -23,7 +25,7 @@ export const loader = (queryClient) => async ({ params }) => {
 }
 
 
-
+const MySwal = withReactContent(Swal)
 
 
 export default function Service() {
@@ -58,6 +60,15 @@ export default function Service() {
           // booking new service
           const res = await axios.post(`/bookings`, booked);
           console.log(res)
+          if (res.data.acknowledged) {
+               MySwal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: <h1 className="text-xl">'Your Appointment saved'</h1>,
+                    showConfirmButton: false,
+                    timer: 1500
+               })
+          }
 
      };
 
