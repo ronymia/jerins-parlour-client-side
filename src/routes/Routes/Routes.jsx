@@ -11,7 +11,7 @@ import { loader as allServicesLoader } from "../../pages/Home/Services/Services"
 import DnaLoader from "../../pages/Shared/Loader/DNALoader/DNALoader";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import Dashboard from "../../pages/Dashboard/Dhashboard/Dashboard";
-import BookingList from "../../pages/Dashboard/BookingList/BookingList";
+import BookingList, { loader as bookingsLoader } from "../../pages/Dashboard/BookingList/BookingList";
 import Review from "../../pages/Dashboard/Review/Review";
 import History from "../../pages/Dashboard/History/History";
 
@@ -57,7 +57,10 @@ export const router = createBrowserRouter([
                     children: [
                          {
                               path: "/dashboard/bookingList",
-                              element: <BookingList />
+                              loader: bookingsLoader(queryClient),
+                              element: <Suspense fallback={<DnaLoader />}>
+                                   <BookingList />
+                              </Suspense>
                          },
                          {
                               path: "/dashboard/review",
