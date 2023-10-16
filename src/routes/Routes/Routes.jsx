@@ -12,7 +12,7 @@ import DnaLoader from "../../pages/Shared/Loader/DNALoader/DNALoader";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import Dashboard from "../../pages/Dashboard/Dhashboard/Dashboard";
 import BookingList, { loader as bookingsLoader } from "../../pages/Dashboard/BookingList/BookingList";
-import Review from "../../pages/Dashboard/Review/Review";
+import Review, { action as reviewAction } from "../../pages/Dashboard/Review/Review";
 import History from "../../pages/Dashboard/History/History";
 
 
@@ -64,6 +64,7 @@ export const router = createBrowserRouter([
                          },
                          {
                               path: "/dashboard/review",
+                              action: reviewAction,
                               element: <Review />
                          },
                          {
