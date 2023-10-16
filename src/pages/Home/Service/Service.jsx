@@ -8,7 +8,7 @@ import withReactContent from 'sweetalert2-react-content'
 
 
 const bookingQuery = (serviceId) => ({
-     queryKey: ["booking", serviceId],
+     queryKey: ["service", serviceId],
      queryFn: async () => {
           const { data } = await axios.get(`/service/${serviceId}`);
           return data;
@@ -25,20 +25,20 @@ export const loader = (queryClient) => async ({ params }) => {
 }
 
 
-const MySwal = withReactContent(Swal)
 
 
 export default function Service() {
      const { user } = useAuth();
      const { serviceId } = useParams();
      const { data: service } = useQuery(bookingQuery(serviceId));
+     const MySwal = withReactContent(Swal)
 
 
      const { register, handleSubmit } = useForm({
           defaultValues: {
                name: user?.displayName,
                email: user?.email,
-               serviceName: service?.name,
+               serviceTitle: service?.service,
                serviceCharge: service?.price
           }
      });
@@ -46,25 +46,32 @@ export default function Service() {
 
      const onHandleBooking = async (data) => {
           const { name, email, phoneNumber } = data;
-
           let currentDate = new Date().toJSON().slice(0, 10);
           let uniquId = new Date().getTime();
-          service.bookedId = uniquId;
-          service.email = email;
-          service.bookingDate = currentDate;
-          service.phoneNumber = phoneNumber;
-          service.patient = name;
 
           // booking new service
-          const res = await axios.post(`/bookings`, service);
-          console.log(res)
+          const bookedInfo = {
+               bookingDate: currentDate,
+               service: service.service,
+               image: service.image,
+               describe: service.describe,
+               price: service.price,
+               completionStatus: "Pending",
+               paymentStatus: "due",
+               name,
+               email,
+               phoneNumber,
+          }
+
+          // insert new bookings
+          const res = await axios.post(`/bookings`, bookedInfo);
           if (res.data.acknowledged) {
                MySwal.fire({
                     position: 'top-end',
                     icon: 'success',
-                    title: <h1 className="text-xl">'Your Appointment saved'</h1>,
+                    title: <h1 className="text-xl">`Your Appointment saved on {currentDate}`</h1>,
                     showConfirmButton: false,
-                    timer: 1500
+                    timer: 2000
                })
           }
 
@@ -97,13 +104,13 @@ export default function Service() {
                     </div>
 
                     <div className="flex flex-col gap-y-2">
-                         <label htmlFor="serviceName"
+                         <label htmlFor="serviceTitle"
                               className="text-[#899694] text-sm"
-                         >Service Name</label>
+                         >Service</label>
                          <input type="text"
                               className="h-11 rounded-md focus:outline-none px-3 text-sm font-medium cursor-not-allowed"
                               disabled
-                              {...register("serviceName")} />
+                              {...register("serviceTitle")} />
                     </div>
 
                     <div className="flex flex-col gap-y-2">

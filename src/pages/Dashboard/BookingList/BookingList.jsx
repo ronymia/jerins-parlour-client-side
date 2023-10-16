@@ -1,14 +1,15 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import { useAuth } from "../../../hooks";
 
 
 
 
 // getting bookings api
-const getAllBookings = () => ({
-     queryKey: ["bookings"],
+export const getAllBookings = (email) => ({
+     queryKey: ["bookings", email],
      queryFn: async () => {
-          const { data } = await axios.get("/bookings");
+          const { data } = await axios.get(`/bookings?email=${email}`);
           return data;
      }
 })
@@ -25,19 +26,20 @@ export const loader = (queryClient) => async () => {
 
 
 export default function BookingList() {
-     const { data: bookings = [] } = useQuery(getAllBookings());
+     const { user } = useAuth();
+     const { data: bookings = [] } = useQuery(getAllBookings(user.email));
 
      console.log(bookings);
 
      return (
-          <div className="">
+          <div className="pb-6">
                <div className="grid grid-cols-2 items-center justify-items-center gap-y-8">
                     {
                          bookings.map(booked => <div key={booked._id}
                               className="flex flex-col gap-2 w-96 bg-white rounded-2xl relative">
                               <img src={booked.image} alt="serive image" className='w-20 m-6 ' />
                               <p className="px-6 text-xl font-semibold text-[#111430] text-start">
-                                   {booked.name}
+                                   {booked.service}
                               </p>
                               <p className="px-6 text-base text-[#606268] text-start">{booked.describe}</p>
                               <button type="button"
