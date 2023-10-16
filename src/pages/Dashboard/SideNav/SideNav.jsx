@@ -34,6 +34,36 @@ const SideNav = () => {
                     History
 
                </NavLink>
+               <NavLink to={"/dashboard/orderList"}
+                    className={({ isActive }) =>
+                         `${isActive
+                              ? "bg-primary text-white tracking-wider rounded-md"
+                              : "text-[#878787]"
+                         } font-medium h-11 w-full cursor-pointer flex justify-center items-center`
+                    }
+               >
+                    Order List
+               </NavLink>
+               <NavLink to={"/dashboard/addService"}
+                    className={({ isActive }) =>
+                         `${isActive
+                              ? "bg-primary text-white tracking-wider rounded-md"
+                              : "text-[#878787]"
+                         } font-medium h-11 w-full cursor-pointer flex justify-center items-center`
+                    }
+               >
+                    Add Service
+               </NavLink>
+               <NavLink to={"/dashboard/makeAdmin"}
+                    className={({ isActive }) =>
+                         `${isActive
+                              ? "bg-primary text-white tracking-wider rounded-md"
+                              : "text-[#878787]"
+                         } font-medium h-11 w-full cursor-pointer flex justify-center items-center`
+                    }
+               >
+                    Make Admin
+               </NavLink>
           </>
      )
 }

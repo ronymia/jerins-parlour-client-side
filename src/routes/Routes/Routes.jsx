@@ -14,6 +14,9 @@ import Dashboard from "../../pages/Dashboard/Dhashboard/Dashboard";
 import BookingList, { loader as bookingsLoader } from "../../pages/Dashboard/BookingList/BookingList";
 import Review, { action as reviewAction } from "../../pages/Dashboard/Review/Review";
 import History from "../../pages/Dashboard/History/History";
+import OrderList from "../../pages/Dashboard/OrderList/OrderList";
+import AddService from "../../pages/Dashboard/AddService/AddService";
+import MakeAdmin from "../../pages/Dashboard/AddService/MakeAdmin/MakeAdmin";
 
 
 
@@ -70,6 +73,18 @@ export const router = createBrowserRouter([
                          {
                               path: "/dashboard/history",
                               element: <History />
+                         },
+                         {
+                              path: "/dashboard/orderList",
+                              element: <OrderList />
+                         },
+                         {
+                              path: "/dashboard/addService",
+                              element: <AddService />
+                         },
+                         {
+                              path: "/dashboard/makeAdmin",
+                              element: <MakeAdmin />
                          },
                     ]
                },
