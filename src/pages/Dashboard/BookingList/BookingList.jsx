@@ -29,7 +29,7 @@ export default function BookingList() {
      const { user } = useAuth();
      const { data: bookings = [] } = useQuery(getAllBookings(user.email));
 
-     console.log(bookings);
+     // console.log(bookings);
 
      return (
           <div className="pb-6">

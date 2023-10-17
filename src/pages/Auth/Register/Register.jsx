@@ -3,6 +3,8 @@ import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import { useAuth } from '../../../hooks';
+import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
+import axios from 'axios';
 
 // TODO : input field error 
 // register error 
@@ -12,11 +14,25 @@ export default function Register() {
      const location = useLocation();
      const { createNewUser, updateUser } = useAuth();
      const { register, handleSubmit, reset } = useForm();
+     const queryClient = useQueryClient();
 
      const from = location.state?.from?.pathname || "/";
 
+
+     const { mutateAsync, isLoading } = useMutation({
+          mutationFn: (newUser) => axios.post("/createNewUser", newUser),
+          onSuccess: () => {
+               queryClient.invalidateQueries({
+                    queryKey: ["users"],
+                    exact: true
+               })
+          }
+     })
+
+
      const userInfoSubmit = async (data) => {
           const { fullName, email, password } = data;
+
 
           try {
                //  create new user
@@ -27,6 +43,11 @@ export default function Register() {
                     displayName: fullName
                }
                const updateUserData = await updateUser(userInfo);
+
+               const userData = { name: fullName, email };
+               // insert new user to the Db
+               const newUser = await mutateAsync(userData);
+               console.log(newUser)
 
                // user navigate
                if (user?.uid) {
@@ -71,9 +92,9 @@ export default function Register() {
                          {...register("confirmPassword")}
                     />
 
-                    <input type="submit" value={"Create an account"}
+                    <button type="submit" disabled={isLoading}
                          className='w-full h-11 bg-primary text-lg text-white mt-2 tracking-widest cursor-pointer rounded'
-                    />
+                    >{isLoading ? "loading" : "Create an account"}</button>
                </form>
                <p className='capitalize mt-5 block text-center font-medium'>
                     already have an account ?

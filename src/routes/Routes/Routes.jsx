@@ -16,7 +16,7 @@ import Review, { action as reviewAction } from "../../pages/Dashboard/Review/Rev
 import History from "../../pages/Dashboard/History/History";
 import OrderList, { loader as orderLoader } from "../../pages/Dashboard/OrderList/OrderList";
 import AddService from "../../pages/Dashboard/AddService/AddService";
-import MakeAdmin from "../../pages/Dashboard/AddService/MakeAdmin/MakeAdmin";
+import MakeAdmin, { loader as userLoader } from "../../pages/Dashboard/MakeAdmin/MakeAdmin";
 
 
 
@@ -87,6 +87,7 @@ export const router = createBrowserRouter([
                          },
                          {
                               path: "/dashboard/makeAdmin",
+                              loader: userLoader(queryClient),
                               element: <MakeAdmin />
                          },
                     ]

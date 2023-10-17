@@ -23,7 +23,7 @@ export const loader = (queryClient) => async () => {
 export default function OrderList() {
      const { user } = useAuth();
      const { data: bookings = [] } = useQuery(getOrderList());
-     console.log(bookings)
+     // console.log(bookings)
 
      return (
           <div className="bg-white p-6">
