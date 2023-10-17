@@ -26,8 +26,34 @@ export default function OrderList() {
      console.log(bookings)
 
      return (
-          <div>
-               <h2>order list</h2>
+          <div className="bg-white p-6">
+               {
+                    <table className="w-full ">
+                         <thead>
+                              <tr className="bg-[#F5F6FA] rounded-xl text-[#686868] font-normal h-11 text-center">
+                                   <td>Name</td>
+                                   <td>Email ID</td>
+                                   <td>Service</td>
+                                   <td>pay with</td>
+                                   <td>status</td>
+                              </tr>
+                         </thead>
+                         <tbody className="">
+                              {
+                                   bookings &&
+                                   bookings.map(booked => <tr key={booked._id}
+                                        className="text-center gap-4"
+                                   >
+                                        <td>{booked.name}</td>
+                                        <td>{booked.email}</td>
+                                        <td>{booked.service}</td>
+                                        <td>{booked.paymentStatus}</td>
+                                        <td>{booked.completionStatus}</td>
+                                   </tr>)
+                              }
+                         </tbody>
+                    </table>
+               }
           </div>
      )
 }
