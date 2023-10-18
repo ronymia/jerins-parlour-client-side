@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "../../../hooks";
+import { useLoaderData } from "react-router-dom";
 
 
 
@@ -22,6 +23,7 @@ export const loader = (queryClient) => async () => {
           (await queryClient.fetchQuery(bookings))
      )
 }
+
 
 
 

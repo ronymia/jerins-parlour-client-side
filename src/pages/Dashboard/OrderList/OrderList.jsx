@@ -28,9 +28,9 @@ export default function OrderList() {
      return (
           <div className="bg-white p-6">
                {
-                    <table className="w-full ">
-                         <thead>
-                              <tr className="bg-[#F5F6FA] rounded-xl text-[#686868] font-normal h-11 text-center">
+                    <table className="w-full ta border-separate border-spacing-4">
+                         <thead className="">
+                              <tr className="bg-[#F5F6FA] rounded-xl text-[#686868] font-normal h-11 text-left">
                                    <td>Name</td>
                                    <td>Email ID</td>
                                    <td>Service</td>
@@ -42,7 +42,7 @@ export default function OrderList() {
                               {
                                    bookings &&
                                    bookings.map(booked => <tr key={booked._id}
-                                        className="text-center gap-4"
+                                        className="text-left gap-4"
                                    >
                                         <td>{booked.name}</td>
                                         <td>{booked.email}</td>

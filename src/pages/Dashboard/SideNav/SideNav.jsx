@@ -8,7 +8,7 @@ const SideNav = () => {
                          `${isActive
                               ? "bg-primary text-white tracking-wider rounded-md"
                               : "text-[#878787]"
-                         } font-medium h-11 w-full cursor-pointer flex justify-center items-center`
+                         } font-medium h-11 w-full cursor-pointer flex justify-start items-center pl-6`
                     }
                >
                     Book List
@@ -18,7 +18,7 @@ const SideNav = () => {
                          `${isActive
                               ? "bg-primary text-white tracking-wider rounded-md"
                               : "text-[#878787]"
-                         } font-medium h-11 w-full cursor-pointer flex justify-center items-center`
+                         } font-medium h-11 w-full cursor-pointer flex justify-start items-center pl-6`
                     }
                >
                     Review
@@ -28,7 +28,7 @@ const SideNav = () => {
                          `${isActive
                               ? "bg-primary text-white tracking-wider rounded-md"
                               : "text-[#878787]"
-                         } font-medium h-11 w-full cursor-pointer flex justify-center items-center`
+                         } font-medium h-11 w-full cursor-pointer flex justify-start items-center pl-6`
                     }
                >
                     History
@@ -39,7 +39,7 @@ const SideNav = () => {
                          `${isActive
                               ? "bg-primary text-white tracking-wider rounded-md"
                               : "text-[#878787]"
-                         } font-medium h-11 w-full cursor-pointer flex justify-center items-center`
+                         } font-medium h-11 w-full cursor-pointer flex justify-start items-center pl-6`
                     }
                >
                     Order List
@@ -49,7 +49,7 @@ const SideNav = () => {
                          `${isActive
                               ? "bg-primary text-white tracking-wider rounded-md"
                               : "text-[#878787]"
-                         } font-medium h-11 w-full cursor-pointer flex justify-center items-center`
+                         } font-medium h-11 w-full cursor-pointer flex justify-start items-center pl-6`
                     }
                >
                     Add Service
@@ -59,7 +59,7 @@ const SideNav = () => {
                          `${isActive
                               ? "bg-primary text-white tracking-wider rounded-md"
                               : "text-[#878787]"
-                         } font-medium h-11 w-full cursor-pointer flex justify-center items-center`
+                         } font-medium h-11 w-full cursor-pointer flex justify-start items-center pl-6`
                     }
                >
                     Make Admin
