@@ -26,34 +26,37 @@ export default function OrderList() {
      // console.log(bookings)
 
      return (
-          <div className="bg-white p-6">
-               {
-                    <table className="w-full ta border-separate border-spacing-4">
-                         <thead className="">
-                              <tr className="bg-[#F5F6FA] rounded-xl text-[#686868] font-normal h-11 text-left">
-                                   <td>Name</td>
-                                   <td>Email ID</td>
-                                   <td>Service</td>
-                                   <td>pay with</td>
-                                   <td>status</td>
-                              </tr>
-                         </thead>
-                         <tbody className="">
-                              {
-                                   bookings &&
-                                   bookings.map(booked => <tr key={booked._id}
-                                        className="text-left gap-4"
-                                   >
-                                        <td>{booked.name}</td>
-                                        <td>{booked.email}</td>
-                                        <td>{booked.service}</td>
-                                        <td>{booked.paymentStatus}</td>
-                                        <td>{booked.completionStatus}</td>
-                                   </tr>)
-                              }
-                         </tbody>
-                    </table>
-               }
+          <div className="bg-white p-6 rounded-2xl">
+               <div className="table w-full text-sm">
+                    <div className="table-header-group">
+                         <div className="table-row bg-[#F5F6FA] rounded-xl text-[#686868] font-normal h-11">
+                              <div className="table-cell pl-3 pt-3">Name</div>
+                              <div className="table-cell">Email ID</div>
+                              <div className="table-cell">Service</div>
+                              <div className="table-cell">Pay with</div>
+                              <div className="table-cell">Status</div>
+                         </div>
+                    </div>
+
+                    <div className="table-row-group">
+                         {
+                              bookings?.map(booked =>
+                                   <div className="table-row h-11">
+                                        <div className="table-cell pl-3">{booked.name}</div>
+                                        <div className="table-cell pt-5">{booked.email}</div>
+                                        <div className="table-cell">{booked.service}</div>
+                                        <div className="table-cell"><span>Due</span></div>
+                                        <div className="table-cell">
+                                             <span className="text-[#FF4545]">Pending</span>
+                                             {/* <span className="text-[#FFBD3E]">on going</span> */}
+                                             {/* <span className="text-[#009444]">Done</span> */}
+                                        </div>
+                                   </div>
+                              )
+                         }
+                    </div>
+
+               </div>
           </div>
      )
 }

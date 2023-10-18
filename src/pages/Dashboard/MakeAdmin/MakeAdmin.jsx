@@ -30,8 +30,8 @@ export default function MakeAdmin() {
      console.log(users);
 
      return (
-          <div className="p-6 bg-white rounded-xl grid grid-cols-1 gap-4">
-               <div className="table w-full">
+          <div className="p-6 bg-white">
+               <div className="table w-full text-sm">
                     <div className="table-header-group">
                          <div className="table-row bg-[#F5F6FA] rounded-xl text-[#686868] font-normal h-11">
                               <div className="table-cell pl-3 pt-3">Name</div>
