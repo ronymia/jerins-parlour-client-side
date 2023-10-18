@@ -28,7 +28,7 @@ export default function Services() {
      const { data: services = [] } = useQuery(getServices());
 
      return (
-          <div className="bg-white px-32 py-32 w-full flex flex-col items-center justify-center">
+          <div className="bg-white px-32 pt-20 pb-32 w-full flex flex-col items-center justify-center">
                <h1 className="text-[#111430] font-bold text-4xl">
                     Our Awesome <span className="text-primary">Services</span>
                </h1>

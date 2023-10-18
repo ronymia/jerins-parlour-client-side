@@ -38,7 +38,7 @@ const reviews = [
 
 export default function Testimonial() {
      return (
-          <div className="bg-white py-32 px-32 flex flex-col items-center justify-center">
+          <div className="bg-white pt-32 px-32 flex flex-col items-center justify-center">
                <h1 className='text-4xl font-bold text-[#1F1632]'>Testimonials</h1>
 
                <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-12 mb-[100px] ">
@@ -46,7 +46,7 @@ export default function Testimonial() {
                          reviews.map(review =>
                               <div
                                    key={review._id}
-                                   className="grid grid-cols-1 rounded hover:border border-[#BFBFBF] p-5"
+                                   className="grid grid-cols-1 rounded shadow-lg p-5"
                               >
                                    <div className="flex flex-col items-start justify-center">
                                         <div className="flex flex-row gap-3">
