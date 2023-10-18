@@ -1,12 +1,13 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "../../../hooks";
+import { getAllBookings } from "../BookingList/BookingList";
 
 // getting bookings api
 export const getOrderList = () => ({
-     queryKey: ["orderList"],
+     queryKey: ["bookings"],
      queryFn: async () => {
-          const { data } = await axios.get(`/orderList`);
+          const { data } = await axios.get(`/bookings`);
           return data;
      }
 })

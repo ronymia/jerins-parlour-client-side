@@ -3,18 +3,25 @@ import { FcGoogle } from 'react-icons/fc';
 import { FaFacebook } from 'react-icons/fa';
 import { useAuth } from '../../../hooks';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 
 const SocialLogin = () => {
      const navigate = useNavigate();
      const location = useLocation();
+     const queryClient = useQueryClient();
      const { signInWithGoogle } = useAuth();
 
      const from = location.state?.from?.pathname || "/";
 
      const { mutateAsync, isLoading } = useMutation({
-          mutationFn: (newUser) => axios.post("/createNewUser", newUser)
+          mutationFn: (newUser) => axios.post("/createNewUser", newUser),
+          onSuccess: () => {
+               queryClient.invalidateQueries({
+                    queryKey: ["users"],
+                    exact: true
+               })
+          }
      })
 
      const googleHandle = async () => {
@@ -25,8 +32,9 @@ const SocialLogin = () => {
                // insert new user to the Db
                const newUser = await mutateAsync(userData);
                console.log(newUser)
-
-               navigate(from, { replace: true });
+               if (newUser) {
+                    navigate(from, { replace: true });
+               }
           }
      }
 

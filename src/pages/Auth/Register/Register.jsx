@@ -12,9 +12,9 @@ import axios from 'axios';
 export default function Register() {
      const navigate = useNavigate();
      const location = useLocation();
+     const queryClient = useQueryClient();
      const { createNewUser, updateUser } = useAuth();
      const { register, handleSubmit, reset } = useForm();
-     const queryClient = useQueryClient();
 
      const from = location.state?.from?.pathname || "/";
 
@@ -47,7 +47,7 @@ export default function Register() {
                const userData = { name: fullName, email };
                // insert new user to the Db
                const newUser = await mutateAsync(userData);
-               console.log(newUser)
+               // console.log(newUser)
 
                // user navigate
                if (user?.uid) {

@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "../../../hooks";
 import Swal from "sweetalert2";
 import withReactContent from 'sweetalert2-react-content'
@@ -30,8 +30,19 @@ export const loader = (queryClient) => async ({ params }) => {
 export default function Service() {
      const { user } = useAuth();
      const { serviceId } = useParams();
+     const queryClient = useQueryClient();
      const { data: service } = useQuery(bookingQuery(serviceId));
-     const MySwal = withReactContent(Swal)
+     const MySwal = withReactContent(Swal);
+
+     //booked
+     const { mutateAsync, isLoading } = useMutation({
+          mutationFn: (bookedInfo) => axios.post(`/bookings`, bookedInfo),
+          onSuccess: () => {
+               queryClient.invalidateQueries({
+                    queryKey: ["bookings"]
+               })
+          }
+     });
 
 
      const { register, handleSubmit } = useForm({
@@ -64,7 +75,7 @@ export default function Service() {
           }
 
           // insert new bookings
-          const res = await axios.post(`/bookings`, bookedInfo);
+          const res = await mutateAsync(bookedInfo);
           if (res.data.acknowledged) {
                MySwal.fire({
                     position: 'top-end',
