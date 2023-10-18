@@ -41,7 +41,9 @@ export default function OrderList() {
                     <div className="table-row-group">
                          {
                               bookings?.map(booked =>
-                                   <div className="table-row h-11">
+                                   <div key={booked._id}
+                                        className="table-row h-11"
+                                   >
                                         <div className="table-cell pl-3">{booked.name}</div>
                                         <div className="table-cell pt-5">{booked.email}</div>
                                         <div className="table-cell">{booked.service}</div>

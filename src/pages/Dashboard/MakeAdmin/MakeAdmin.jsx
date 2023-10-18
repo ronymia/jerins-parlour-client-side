@@ -27,7 +27,7 @@ export const loader = (queryClient) => async () => {
 export default function MakeAdmin() {
 
      const { data: users = [], isLoading } = useQuery(getUsers());
-     console.log(users);
+     // console.log(users);
 
      return (
           <div className="p-6 bg-white">
@@ -44,7 +44,9 @@ export default function MakeAdmin() {
                     <div className="table-row-group">
                          {
                               users?.map(user =>
-                                   <div className="table-row h-11">
+                                   <div key={user._id}
+                                        className="table-row h-11"
+                                   >
                                         <div className="table-cell pl-3">{user.name}</div>
                                         <div className="table-cell pt-5">{user.email}</div>
                                         <div className="table-cell">
