@@ -31,7 +31,6 @@ const SocialLogin = () => {
                const userData = { name: user.displayName, email: user.email };
                // insert new user to the Db
                const newUser = await mutateAsync(userData);
-               console.log(newUser)
                if (newUser) {
                     navigate(from, { replace: true });
                }
