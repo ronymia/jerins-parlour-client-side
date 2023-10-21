@@ -1,8 +1,7 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "../../../hooks";
-import { useLoaderData } from "react-router-dom";
-
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 
 
@@ -10,10 +9,15 @@ import { useLoaderData } from "react-router-dom";
 export const getAllBookings = (email) => ({
      queryKey: ["bookings", email],
      queryFn: async () => {
-          const { data } = await axios.get(`/bookings?email=${email}`);
+          const { data } = await axios.get(`/bookings?email=${email}`, {
+               headers: {
+                    authorization: `Bearer ${localStorage.getItem('access-token')}`
+               }
+          });
           return data;
      }
 })
+
 
 // bookings loader
 export const loader = (queryClient) => async () => {
@@ -28,10 +32,13 @@ export const loader = (queryClient) => async () => {
 
 
 export default function BookingList() {
-     const { user } = useAuth();
-     const { data: bookings = [] } = useQuery(getAllBookings(user.email));
+     const [axiosSecure] = useAxiosSecure();
+     const { user: { email } } = useAuth();
+
+     const { data: bookings = [], error } = useQuery(getAllBookings(email));
 
      // console.log(bookings);
+     console.log(error);
 
      return (
           <div className="pb-6">

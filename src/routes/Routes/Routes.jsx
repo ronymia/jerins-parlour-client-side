@@ -62,7 +62,7 @@ export const router = createBrowserRouter([
                     children: [
                          {
                               path: "/dashboard/bookingList",
-                              loader: bookingsLoader(queryClient),
+                              // loader: bookingsLoader(queryClient),
                               element: <Suspense fallback={<DnaLoader />}>
                                    <BookingList />
                               </Suspense>

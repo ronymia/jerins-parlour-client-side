@@ -1,29 +1,33 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "../../../hooks";
-import { getAllBookings } from "../BookingList/BookingList";
+// import { getAllBookings } from "../BookingList/BookingList";
 
 // getting bookings api
 export const getOrderList = () => ({
-     queryKey: ["bookings"],
+     queryKey: ["orderList"],
      queryFn: async () => {
-          const { data } = await axios.get(`/bookings`);
+          const { data } = await axios.get(`/orderList`, {
+               headers: {
+                    authorization: `Bearer ${localStorage.getItem('access-token')}`
+               }
+          });
           return data;
      }
 })
 
-// bookings loader
+// orderList loader
 export const loader = (queryClient) => async () => {
-     const bookings = await getOrderList();
+     const orderList = await getOrderList();
      return (
-          queryClient.getQueryData(bookings.queryKey) ??
-          (await queryClient.fetchQuery(bookings))
+          queryClient.getQueryData(orderList.queryKey) ??
+          (await queryClient.fetchQuery(orderList))
      )
 }
 
 export default function OrderList() {
      const { user } = useAuth();
-     const { data: bookings = [] } = useQuery(getOrderList());
+     const { data: orderList = [] } = useQuery(getOrderList());
      // console.log(bookings)
 
      return (
@@ -41,7 +45,7 @@ export default function OrderList() {
 
                     <div className="table-row-group">
                          {
-                              bookings?.map(booked =>
+                              orderList?.map(booked =>
                                    <div key={booked._id}
                                         className="table-row h-11"
                                    >
