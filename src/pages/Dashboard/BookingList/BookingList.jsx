@@ -39,8 +39,9 @@ export default function BookingList() {
      const queryClient = useQueryClient();
      const deleteSwal = withReactContent(Swal);
 
-     const { data: bookings = [], error } = useQuery(getAllBookings(email));
+     const { data: bookings = [] } = useQuery(getAllBookings(email));
 
+     // bookings cancle
      const { mutateAsync } = useMutation({
           mutationFn: async (bookedId) => axios.delete(`/cancelBooked/${bookedId}`),
           onSuccess: () => {

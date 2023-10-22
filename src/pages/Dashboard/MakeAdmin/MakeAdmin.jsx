@@ -33,7 +33,11 @@ export default function MakeAdmin() {
      // console.log(users);
 
      const { mutateAsync } = useMutation({
-          mutationFn: async (_id) => await axios.patch(`/user/admin/${_id}`),
+          mutationFn: async (_id) => await axios.patch(`/user/admin/${_id}`, {
+               headers: {
+                    authorization: `Bearer ${localStorage.getItem('access-token')}`
+               }
+          }),
           onSuccess: async () => {
                queryClient.invalidateQueries({
                     queryKey: ["users"],
@@ -50,7 +54,7 @@ export default function MakeAdmin() {
                MakeAdminSwal.fire({
                     position: 'top-end',
                     icon: 'success',
-                    title: <h1 className="text-xl">`admin success`</h1>,
+                    title: <h1 className="text-xl">Make Admin {user.name}</h1>,
                     showConfirmButton: false,
                     timer: 2000
                })

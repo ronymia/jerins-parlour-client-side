@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function ServiceCard({ service }) {
      const navigate = useNavigate();
-     console.log(service)
-     const { _id, image, title, price, describe } = service;
+     const { _id, image, price, describe } = service;
 
      return (
           <div onClick={() => navigate(`/service/${_id}`)}

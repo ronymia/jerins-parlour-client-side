@@ -17,6 +17,7 @@ import History from "../../pages/Dashboard/History/History";
 import OrderList, { loader as orderLoader } from "../../pages/Dashboard/OrderList/OrderList";
 import AddService from "../../pages/Dashboard/AddService/AddService";
 import MakeAdmin, { loader as userLoader } from "../../pages/Dashboard/MakeAdmin/MakeAdmin";
+import AdminRoute from "../AdminRoute/AdminRoute";
 
 
 
@@ -79,16 +80,16 @@ export const router = createBrowserRouter([
                          {
                               path: "/dashboard/orderList",
                               loader: orderLoader(queryClient),
-                              element: <OrderList />
+                              element: <AdminRoute><OrderList /></AdminRoute>
                          },
                          {
                               path: "/dashboard/addService",
-                              element: <AddService />
+                              element: <AdminRoute><AddService /></AdminRoute>
                          },
                          {
                               path: "/dashboard/makeAdmin",
                               loader: userLoader(queryClient),
-                              element: <MakeAdmin />
+                              element: <AdminRoute><MakeAdmin /></AdminRoute>
                          },
                     ]
                },
