@@ -1,3 +1,5 @@
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 import { Form, redirect, useActionData, useLoaderData, useNavigation } from "react-router-dom";
 
 
@@ -14,9 +16,9 @@ export const action = async ({ request }) => {
      }
 
      // return data if we have errors
-     if (Object.keys(errors).length) {
-          return errors;
-     }
+     // if (Object.keys(errors).length) {
+     //      return errors;
+     // }
 
      const updates = Object.fromEntries(formData);
      // console.log(updates);
@@ -29,11 +31,23 @@ export default function Review() {
      const actionData = useActionData();
      // form submitting indicator
      const busy = navigation.state === "submitting";
-     // console.log(actionData);
+     console.log(actionData);
+
+
+     const { mutateAsync } = useMutation({
+          mutationFn: async (review) => await axios.post("/createMyReview", review)
+     })
+
+     const createMyReview = async () => {
+          const postReview = await mutateAsync(actionData);
+          console.log(postReview);
+     }
+
 
      return (
           <div className="">
                <Form method="post" action="/dashboard/review"
+                    onClick={createMyReview}
                     className="bg-white p-10 flex flex-col items-start gap-6 w-1/2 pb-2 rounded-md"
                >
                     <div className="flex flex-col gap-2 items-start w-full">
