@@ -3,7 +3,7 @@ import useAdmin from "../../../hooks/useAdmin";
 
 const SideNav = () => {
 
-     const [isAdmin] = useAdmin();;
+     const [isAdmin] = useAdmin();
 
 
 

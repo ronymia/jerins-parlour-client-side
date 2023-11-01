@@ -35,7 +35,7 @@ export default function Service() {
      const MySwal = withReactContent(Swal);
 
      //booked
-     const { mutateAsync, isLoading } = useMutation({
+     const { mutateAsync } = useMutation({
           mutationFn: (bookedInfo) => axios.post(`/bookings`, bookedInfo),
           onSuccess: () => {
                queryClient.invalidateQueries({
@@ -53,7 +53,6 @@ export default function Service() {
                serviceCharge: service?.price
           }
      });
-
 
      const onHandleBooking = async (data) => {
           const { name, email, phoneNumber } = data;

@@ -38,7 +38,7 @@ const reviews = [
 
 export default function Testimonial() {
      return (
-          <div className="bg-white pt-32 px-32 flex flex-col items-center justify-center">
+          <div className="bg-white pt-32 px-20 flex flex-col items-center justify-center">
                <h1 className='text-4xl font-bold text-[#1F1632]'>Testimonials</h1>
 
                <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-12 mb-[100px] ">

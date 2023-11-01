@@ -21,29 +21,31 @@ export const getAllBookings = (email) => ({
 })
 
 
+// try to use loader but fail 
+// * reason i send query params email
 // bookings loader
-export const loader = (queryClient) => async () => {
-     const bookings = await getAllBookings();
-     return (
-          queryClient.getQueryData(bookings.queryKey) ??
-          (await queryClient.fetchQuery(bookings))
-     )
-}
+// export const loader = (queryClient) => async () => {
+//      const bookings = await getAllBookings();
+//      return (
+//           queryClient.getQueryData(bookings.queryKey) ??
+//           (await queryClient.fetchQuery(bookings))
+//      )
+// }
 
 
 
 
 export default function BookingList() {
      const [axiosSecure] = useAxiosSecure();
-     const { user: { email } } = useAuth();
+     const { user } = useAuth();
      const queryClient = useQueryClient();
      const deleteSwal = withReactContent(Swal);
 
-     const { data: bookings = [] } = useQuery(getAllBookings(email));
+     const { data: bookings = [] } = useQuery(getAllBookings(user?.email));
 
      // bookings cancle
      const { mutateAsync } = useMutation({
-          mutationFn: async (bookedId) => axios.delete(`/cancelBooked/${bookedId}`),
+          mutationFn: async (bookedId) => await axios.delete(`/cancelBooked/${bookedId}`),
           onSuccess: () => {
                queryClient.invalidateQueries({
                     queryKey: ['bookings']
@@ -54,7 +56,7 @@ export default function BookingList() {
      const handleCancelBooked = async (bookedId) => {
           console.log(bookedId);
           const res = await mutateAsync(bookedId);
-          console.log(res);
+          // console.log(res);
 
           if (res.data) {
                deleteSwal.fire({

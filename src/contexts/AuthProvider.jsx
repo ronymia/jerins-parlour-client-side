@@ -32,6 +32,7 @@ const AuthProvider = ({ children }) => {
 
      //user update profile
      const updateUser = (userInfo) => {
+          setLoading(true);
           return updateProfile(auth.currentUser, userInfo);
      }
 
@@ -50,7 +51,7 @@ const AuthProvider = ({ children }) => {
      //current user observer 
      useEffect(() => {
           const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-               // console.log("current user", currentUser );
+               // console.log("current user", currentUser);
 
                // set current user
                setUser(currentUser);
@@ -64,10 +65,11 @@ const AuthProvider = ({ children }) => {
                          })
                } else {
                     localStorage.removeItem("access-token");
+                    setLoading(false);
                }
           })
-          setLoading(false);
-          // clean up
+
+          // cleanup function
           return () => unsubscribe();
      }, [])
 

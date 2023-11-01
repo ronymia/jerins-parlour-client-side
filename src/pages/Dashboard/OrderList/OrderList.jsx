@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import { useAuth } from "../../../hooks";
-// import { getAllBookings } from "../BookingList/BookingList";
+
+
+
 
 // getting bookings api
 export const getOrderList = () => ({
@@ -26,7 +27,6 @@ export const loader = (queryClient) => async () => {
 }
 
 export default function OrderList() {
-     const { user } = useAuth();
      const { data: orderList = [] } = useQuery(getOrderList());
      // console.log(bookings)
 

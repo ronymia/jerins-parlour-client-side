@@ -3,7 +3,7 @@ import img from "../../../assets/images/engin-akyurt-g-m8EDc4X6Q-unsplash 1.png"
 
 export default function Portfolio() {
      return (
-          <div className="grid grid-cols-2 items-center justify-center gap-24 px-32 py-32">
+          <div className="grid grid-cols-2 items-center justify-center gap-24 px-20 py-32">
                <div className="">
                     <img src={img} alt="" />
                </div>

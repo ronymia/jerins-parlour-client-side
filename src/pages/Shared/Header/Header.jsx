@@ -2,13 +2,15 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../hooks';
 //import logo
 import logo from '../../../assets/logo.png'
+import useAdmin from '../../../hooks/useAdmin';
 
 export default function Header() {
      const navigate = useNavigate();
      const { user, userSignOut } = useAuth();
+     const [isAdmin] = useAdmin();
 
      return (
-          <header className='flex flex-row items-center justify-between px-32 max-w-full py-5 bg-[#FFF8F5]'>
+          <header className='flex flex-row items-center justify-between px-20 py-5 bg-[#FFF8F5]'>
                <img src={logo} alt="logo"
                     className='h-12 cursor-pointer'
                     onClick={() => navigate("/")}
@@ -19,7 +21,11 @@ export default function Header() {
                          <NavLink>Services</NavLink>
                          <NavLink>Testimonial</NavLink>
                          <NavLink>Contact Us</NavLink>
-                         <NavLink to={"/dashboard/bookingList"}>Dashboard</NavLink>
+                         {user?.uid && <NavLink to={
+                              isAdmin ?
+                                   "/dashboard/orderList"
+                                   :
+                                   "/dashboard/bookingList"}>Dashboard</NavLink>}
                          {
                               user?.uid ?
                                    <button type="button"
