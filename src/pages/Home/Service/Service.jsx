@@ -89,10 +89,10 @@ export default function Service() {
 
 
      return (
-          <div className="w-full my-12 flex items-center justify-center">
+          <div className="w-full px-6 my-12 flex items-center justify-center">
                <form
                     onSubmit={handleSubmit(onHandleBooking)}
-                    className="w-1/3 p-6 bg-[#F4F7FC] flex flex-col gap-y-4 rounded-md"
+                    className="w-full md:w-1/3 p-6 bg-[#F4F7FC] flex flex-col gap-y-4 rounded-md"
                >
                     <div className="flex flex-col gap-y-2">
                          <label htmlFor="name"
