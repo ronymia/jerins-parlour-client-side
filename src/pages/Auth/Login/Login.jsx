@@ -30,7 +30,7 @@ export default function Login() {
      }
 
      return (
-          <div className="w-[570px] border border-[#ABABAB] rounded px-10 py-5 bg-white mx-auto my-10">
+          <div className="w-11/12 md:w-[570px] border border-[#ABABAB] rounded px-6 md:px-10 py-5 bg-white mx-auto my-10">
                <h1 className='text-2xl font-bold capitalize mt-5'>get in touch</h1>
                <form onSubmit={handleSubmit(SignIn)}
                     className="flex flex-col gap-y-5 mt-6"
@@ -52,7 +52,7 @@ export default function Login() {
                     />
                </form>
 
-               <p className='capitalize mt-5 block text-center font-medium'>
+               <p className='capitalize mt-5 block text-center font-medium text-sm md:text-base'>
                     don't have an account ?
                     <Link to={"/auth/register"}
                          className='text-primary ml-1 hover:underline'
