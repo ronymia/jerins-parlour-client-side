@@ -63,7 +63,7 @@ export default function Register() {
      }
 
      return (
-          <div className="w-[570px] border border-[#ABABAB] rounded px-10 py-5 bg-white mx-auto my-5">
+          <div className="w-11/12 md:w-[570px] border border-[#ABABAB] rounded px-6 md:px-10 py-5 bg-white mx-auto my-5">
                <h1 className='text-2xl font-bold mt-5'>Create an account</h1>
                <form onSubmit={handleSubmit(userInfoSubmit)}
                     className="flex flex-col gap-y-5 mt-6"
@@ -96,7 +96,7 @@ export default function Register() {
                          className='w-full h-11 bg-primary text-lg text-white mt-2 tracking-widest cursor-pointer rounded'
                     >{isLoading ? "loading" : "Create an account"}</button>
                </form>
-               <p className='capitalize mt-5 block text-center font-medium'>
+               <p className='capitalize mt-5 block text-center font-medium text-sm md:text-base'>
                     already have an account ?
                     <Link to={"/auth/login"}
                          className='text-primary ml-1 hover:underline'
