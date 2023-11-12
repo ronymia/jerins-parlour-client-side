@@ -69,9 +69,9 @@ export default function Header() {
                     <ul className={`absolute top-10 right-0 bg-white w-[200px] 
                     h-[500px] md:hidden flex  flex-col justify-start items-center pt-10 gap-y-6 text-xl 
                     transition-all ${toggleMenu ?
-                              "opacity-100"
+                              "block"
                               :
-                              "opacity-0"
+                              "hidden"
                          }`}
                     >
                          {navMenu}
