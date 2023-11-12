@@ -45,9 +45,8 @@ export const router = createBrowserRouter([
                {
                     path: "/service/:serviceId",
                     loader: serviceLoader(queryClient),
-                    element: <Suspense fallback={<DnaLoader />}>
+                    element:
                          <PrivateRoute> <Service /></PrivateRoute>
-                    </Suspense>
                },
                {
                     path: "/dashboard",

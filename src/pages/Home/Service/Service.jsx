@@ -34,6 +34,7 @@ export default function Service() {
      const { data: service } = useQuery(bookingQuery(serviceId));
      const MySwal = withReactContent(Swal);
 
+
      //booked
      const { mutateAsync } = useMutation({
           mutationFn: (bookedInfo) => axios.post(`/bookings`, bookedInfo),
@@ -44,13 +45,12 @@ export default function Service() {
           }
      });
 
-
      const { register, handleSubmit } = useForm({
           defaultValues: {
                name: user?.displayName,
                email: user?.email,
-               serviceTitle: service?.service,
-               serviceCharge: service?.price
+               // serviceTitle: service?.service,
+               // serviceCharge: service?.price
           }
      });
 
@@ -120,7 +120,9 @@ export default function Service() {
                          <input type="text"
                               className="h-11 rounded-md focus:outline-none px-3 text-sm font-medium cursor-not-allowed"
                               disabled
-                              {...register("serviceTitle")} />
+                              {...register("serviceTitle")}
+                              defaultValue={service?.service}
+                         />
                     </div>
 
                     <div className="flex flex-col gap-y-2">
@@ -130,7 +132,9 @@ export default function Service() {
                          <input type="number"
                               className="h-11 rounded-md focus:outline-none px-3 text-sm font-medium cursor-not-allowed placeholder:"
                               disabled
-                              {...register("serviceCharge")} />
+                              {...register("serviceCharge")}
+                              defaultValue={service?.price}
+                         />
                     </div>
 
                     <div className="flex flex-col gap-y-2">

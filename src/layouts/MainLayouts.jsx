@@ -10,7 +10,7 @@ export default function MainLayouts() {
           <>
                <Header />
                <Outlet />
-               {noFooter || <Footer />}
+               {/* {noFooter || <Footer />} */}
           </>
      )
 }
