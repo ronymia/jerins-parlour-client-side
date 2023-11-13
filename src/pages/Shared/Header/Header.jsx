@@ -42,7 +42,7 @@ export default function Header() {
 
      return (
           <header className='flex flex-row items-center justify-between px-6 md:px-20 
-          py-5 bg-[#FFF8F5] sticky top-0 z-50'>
+          py-5 bg-[#FFF8F5] sticky top-0 z-50 h-20'>
                <img src={logo} alt="logo"
                     className='h-12 cursor-pointer'
                     onClick={() => navigate("/")}

@@ -31,7 +31,7 @@ export default function OrderList() {
      // console.log(bookings)
 
      return (
-          <div className="bg-white p-6 rounded-2xl">
+          <div className="bg-white p-6 rounded-2xl h-full overflow-hidden">
                <div className="table w-full text-sm">
                     <div className="table-header-group">
                          <div className="table-row bg-[#F5F6FA] rounded-xl text-[#686868] font-normal h-11">
