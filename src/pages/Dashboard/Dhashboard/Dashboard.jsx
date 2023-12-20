@@ -7,7 +7,7 @@ export default function Dashboard() {
                style={{
                     height: "calc(100vh - 80px)"
                }}
-               className="w-full px-20 flex flex-row bg-[#F4F7FC]">
+               className="w-full px-6 md:px-20 flex flex-row bg-[#F4F7FC]">
                <aside className="w-1/5 my-6 p-5 bg-white flex flex-col rounded-2xl">
                     <SideNav />
                </aside>

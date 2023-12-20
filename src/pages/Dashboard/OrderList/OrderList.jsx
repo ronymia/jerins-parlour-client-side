@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import DnaLoader from "../../Shared/Loader/DNALoader/DNALoader";
 
 
 
@@ -27,11 +28,15 @@ export const loader = (queryClient) => async () => {
 }
 
 export default function OrderList() {
-     const { data: orderList = [] } = useQuery(getOrderList());
+     const { data: orderList = [], isLoadings } = useQuery(getOrderList());
      // console.log(bookings)
 
+     if (isLoadings) {
+          return <DnaLoader />
+     }
+
      return (
-          <div className="bg-white p-6 rounded-2xl h-full overflow-hidden">
+          <div className="bg-white p-6 rounded-2xl h-full">
                <div className="table w-full text-sm">
                     <div className="table-header-group">
                          <div className="table-row bg-[#F5F6FA] rounded-xl text-[#686868] font-normal h-11">

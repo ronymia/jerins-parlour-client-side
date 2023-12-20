@@ -45,20 +45,15 @@ export const router = createBrowserRouter([
                {
                     path: "/service/:serviceId",
                     loader: serviceLoader(queryClient),
-                    element:
-                         <PrivateRoute> <Service /></PrivateRoute>
+                    element: <PrivateRoute> <Service /></PrivateRoute>
                },
                {
                     path: "/dashboard",
-                    element: <PrivateRoute>
-                         <Dashboard />
-                    </PrivateRoute>,
+                    element: <PrivateRoute><Dashboard /></PrivateRoute>,
                     children: [
                          {
                               path: "/dashboard/bookingList",
-                              element: <Suspense fallback={<DnaLoader />}>
-                                   <BookingList />
-                              </Suspense>
+                              element: <BookingList />
                          },
                          {
                               path: "/dashboard/review",
