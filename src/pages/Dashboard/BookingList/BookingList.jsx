@@ -39,7 +39,7 @@ export default function BookingList() {
      const [axiosSecure] = useAxiosSecure();
      const { user } = useAuth();
      const queryClient = useQueryClient();
-     const deleteSwal = withReactContent(Swal);
+     const deleteBookingSwal = withReactContent(Swal);
 
      const { data: bookings = [] } = useQuery(getAllBookings(user?.email));
 
@@ -53,20 +53,26 @@ export default function BookingList() {
           }
      })
 
+     // DELETE BOOKING
      const handleCancelBooked = async (bookedId) => {
-          console.log(bookedId);
-          const res = await mutateAsync(bookedId);
-          // console.log(res);
-
-          if (res.data) {
-               deleteSwal.fire({
-                    position: 'top-end',
-                    icon: 'success',
-                    title: <h1 className="text-xl">`cancel success`</h1>,
-                    showConfirmButton: false,
-                    timer: 2000
-               })
-          }
+          deleteBookingSwal.fire({
+               title: "Are you sure?",
+               text: "You won't be able to revert this!",
+               icon: "warning",
+               showCancelButton: true,
+               confirmButtonColor: "#3085d6",
+               cancelButtonColor: "#d33",
+               confirmButtonText: "Yes, delete it!"
+          }).then(async (result) => {
+               if (result.isConfirmed) {
+                    await mutateAsync(bookedId);
+                    /* Swal.fire({
+                         title: "Deleted!",
+                         text: "Your file has been deleted.",
+                         icon: "success"
+                    }); */
+               }
+          });
      }
 
      return (

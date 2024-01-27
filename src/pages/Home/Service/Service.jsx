@@ -25,8 +25,6 @@ export const loader = (queryClient) => async ({ params }) => {
 }
 
 
-
-
 export default function Service() {
      const { user } = useAuth();
      const { serviceId } = useParams();
@@ -34,7 +32,7 @@ export default function Service() {
      const { data: service } = useQuery(bookingQuery(serviceId));
      const MySwal = withReactContent(Swal);
 
-
+     // console.log(service)
      //booked
      const { mutateAsync } = useMutation({
           mutationFn: (bookedInfo) => axios.post(`/bookings`, bookedInfo),
@@ -79,9 +77,9 @@ export default function Service() {
                MySwal.fire({
                     position: 'top-end',
                     icon: 'success',
-                    title: <h1 className="text-xl">`Your Appointment saved on {currentDate}`</h1>,
+                    title: <h1 className="text-xl">Your Appointment saved on {currentDate}</h1>,
                     showConfirmButton: false,
-                    timer: 2000
+                    timer: 1500
                })
           }
 
