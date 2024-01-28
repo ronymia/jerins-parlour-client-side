@@ -6,12 +6,18 @@ export default function ServiceCard({ service }) {
      const { _id, image, price, describe } = service;
 
      return (
-          <div onClick={() => navigate(`/service/${_id}`)}
-               className="flex flex-col items-center justify-center gap-2 max-w-xs md:w-96 h-80 shadow-xl rounded-xl p-10 transition cursor-pointer">
+          <div className="flex flex-col items-center justify-center gap-y-2 max-w-xs md:w-96 h-80 shadow-xl rounded-xl p-2">
                <img src={image} alt="serive image" className='w-20' />
-               <p className="text-xl font-semibold text-[#111430]">{service.service}</p>
+               <div className="text-xl font-semibold text-[#111430]"><h4>{service.service}</h4></div>
                <p className="text-xl font-medium text-primary px-2">${price}</p>
-               <p className="text-sm md:text-base font-light text-gray text-center h-auto">{describe}</p>
+               <p className="text-sm md:text-xs- font-light text-gray px-3 mb-2">
+                    {describe}
+               </p>
+               <button type="button"
+                    className="capitalize px-7 py-3 h-12 text-white bg-primary rounded-[5px] font-medium"
+               >
+                    make an appointment
+               </button>
           </div>
      )
 }

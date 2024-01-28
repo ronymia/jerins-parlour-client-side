@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 
 
 
+
 // getting bookings api
 export const getAllBookings = (email) => ({
      queryKey: ["bookings", email],
@@ -45,7 +46,7 @@ export default function BookingList() {
 
      // bookings cancle
      const { mutateAsync } = useMutation({
-          mutationFn: async (bookedId) => await axios.delete(`/cancelBooked/${bookedId}`),
+          mutationFn: async (bookedId) => await axiosSecure.delete(`/cancelBooked/${bookedId}`),
           onSuccess: () => {
                queryClient.invalidateQueries({
                     queryKey: ['bookings']

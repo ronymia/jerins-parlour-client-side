@@ -10,7 +10,7 @@ export default function Hero() {
                     <p className='text-[#666666] md:w-3/4 w-full'>
                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Purus commodo ipsum duis laoreet maecenas. Feugiat
                     </p>
-
+                    {/* APPOINTMENT BUTTON  */}
                     <button type="button"
                          className='bg-primary h-12 px-7 rounded-md text-white font-medium'
                     >Get an Appointment</button>
