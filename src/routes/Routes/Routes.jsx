@@ -4,8 +4,6 @@ import { QueryClient } from "@tanstack/react-query";
 import MainLayouts from "../../layouts/MainLayouts";
 import Home from "../../pages/Home/Home/Home";
 import { Login, Register } from "../../pages/Auth";
-import Service, { loader as serviceLoader } from "../../pages/Home/Service/Service";
-import DnaLoader from "../../pages/Shared/Loader/DNALoader/DNALoader";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import AdminRoute from "../AdminRoute/AdminRoute";
 import Dashboard from "../../pages/Dashboard/Dhashboard/Dashboard";
@@ -41,11 +39,6 @@ export const router = createBrowserRouter([
                {
                     path: "/auth/register",
                     element: <Register />
-               },
-               {
-                    path: "/service/:serviceId",
-                    loader: serviceLoader(queryClient),
-                    element: <PrivateRoute> <Service /></PrivateRoute>
                },
                {
                     path: "/dashboard",

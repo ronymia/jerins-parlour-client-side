@@ -10,6 +10,12 @@ const getServices = () => ({
      queryKey: ["services"],
      queryFn: async () => {
           const { data } = await axios.get("/services");
+          if (!data) {
+               throw new Response('', {
+                    status: 404,
+                    statusText: 'Not Found'
+               })
+          }
           return data;
      }
 })
