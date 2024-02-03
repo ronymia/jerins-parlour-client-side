@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Form, useParams } from "react-router-dom";
 import axios from "axios";
@@ -44,6 +44,34 @@ export default function MakeAppointmentPopup({ serviceId: treamentId, closeModal
      const queryClient = useQueryClient(); //QUERY CLIENT
      const { user } = useAuth();   // CURRENT USER 
      const MySwal = withReactContent(Swal);
+
+     //number key remove
+     const numberRef = useRef(null);
+
+     useEffect(() => {
+          const handleWheel = (e) => {
+               e.preventDefault();
+          }
+          const handleKeyDown = (e) => {
+               if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+                    e.preventDefault();
+               }
+          }
+          const inputElement = numberRef.current;
+
+          if (inputElement) {
+               inputElement.addEventListener("wheel", handleWheel, { passive: false });
+               inputElement.addEventListener("keydown", handleKeyDown, { passive: false });
+          }
+
+          //CLEANUP USEeFFECT
+          return () => {
+               inputElement.removeEventListener("wheel", handleWheel)
+               inputElement.removeEventListener("keydown", handleKeyDown)
+          }
+
+     }, []);
+
 
      // SINGLE SERVICE DATA API
      const { data: service, isLoading } = useQuery(bookingQuery(treamentId));
@@ -178,6 +206,7 @@ export default function MakeAppointmentPopup({ serviceId: treamentId, closeModal
                          <input type="number"
                               name="customerNumber"
                               aria-label="Customer Number"
+                              ref={numberRef}
                               className="h-11 w-full rounded-md focus:outline-none px-3 text-sm font-medium"
                          />
                     </label>
