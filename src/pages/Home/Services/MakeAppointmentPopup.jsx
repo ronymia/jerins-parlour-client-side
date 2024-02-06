@@ -1,6 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Form, useParams } from "react-router-dom";
 import axios from "axios";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
@@ -65,7 +64,7 @@ export default function MakeAppointmentPopup({ serviceId: treamentId, closeModal
           name: user?.displayName,
           email: user?.email,
           serviceTitle: service?.service,
-          toDay: null,
+          appointment_date: null,
      });
 
      //BOOKED SUBMITTING
@@ -78,15 +77,6 @@ export default function MakeAppointmentPopup({ serviceId: treamentId, closeModal
           }
      });
 
-     //APPOINTMENT BOOKED FORM
-     const { register, handleSubmit } = useForm({
-          defaultValues: {
-               name: bookedInfo?.name,
-               email: bookedInfo?.email,
-               // serviceTitle: bookedInfo.serviceTitle,
-               // serviceCharge: service?.price
-          }
-     });
 
      //FORM SUBMITTING
      const onHandleBooking = async (event) => {
@@ -97,22 +87,21 @@ export default function MakeAppointmentPopup({ serviceId: treamentId, closeModal
           // booking new service
           const bookedInfo = {
                ...bookingData,
-               toDay: toDay,
                service_id: treamentId,
                status: "pending",
                payment: "due",
           };
-          console.log(bookedInfo);
+          
           // insert new bookings
           const res = await mutateAsync(bookedInfo);
           if (res.data.acknowledged) {
                //closing modal
-               setOpenModal(pre => !pre);
+               closeModal();
                //NOTIFICATION POPUP
                MySwal.fire({
                     position: 'top-end',
                     icon: 'success',
-                    title: <h1 className="text-xl">Your Appointment saved on {currentDate}</h1>,
+                    title: <p className="text-xl">Your Appointment saved on {bookingData.appointment_date}</p>,
                     showConfirmButton: false,
                     timer: 1500
                })
@@ -136,7 +125,7 @@ export default function MakeAppointmentPopup({ serviceId: treamentId, closeModal
                </div>
 
                {/* BOOKING FORM  */}
-               <Form
+               <form
                     onSubmit={onHandleBooking}
                     className="w-full flex flex-col items-center justify-center gap-y-2"
                >
@@ -208,7 +197,7 @@ export default function MakeAppointmentPopup({ serviceId: treamentId, closeModal
                          value={"Confirm Booking"}
                          className="w-full capitalize px-7 py-3 h-12 text-white bg-primary rounded-[5px] font-medium"
                     >Confirm Booking</button>
-               </Form>
+               </form>
           </div>
      )
 }
