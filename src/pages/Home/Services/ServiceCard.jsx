@@ -4,7 +4,11 @@ import MakeAppointmentPopup from './MakeAppointmentPopup';
 
 export default function ServiceCard({ service }) {
      const [popupState, setPopupState] = useState(false);
-     const closeModal = () => setPopupState(pre => !pre);
+     const closeModal = () => {
+          const removeBodyStyle = document.body
+          removeBodyStyle.removeAttribute('style');
+          setPopupState(pre => !pre)
+     };
      const { _id, image, price, describe } = service;
 
      return (
@@ -27,8 +31,8 @@ export default function ServiceCard({ service }) {
                {
                     popupState && <Popup
                          open={popupState}
-                         // closeOnDocumentClick
-                         // lockScroll
+                         closeOnDocumentClick
+                         lockScroll
                          overlayStyle={{
                               background: "rgba(0,0,0,0.5)",
                               backdropFilter: "blur(2px)",

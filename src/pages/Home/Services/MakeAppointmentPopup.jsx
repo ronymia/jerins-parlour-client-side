@@ -7,6 +7,9 @@ import Swal from "sweetalert2";
 import withReactContent from 'sweetalert2-react-content'
 import { MdCancel } from "react-icons/md";
 import { useAuth } from "../../../hooks";
+import { format } from "date-fns";
+
+
 
 
 const bookingQuery = (serviceId) => ({
@@ -44,33 +47,9 @@ export default function MakeAppointmentPopup({ serviceId: treamentId, closeModal
      const queryClient = useQueryClient(); //QUERY CLIENT
      const { user } = useAuth();   // CURRENT USER 
      const MySwal = withReactContent(Swal);
-
-     //number key remove
-     const numberRef = useRef(null);
-
-     useEffect(() => {
-          const handleWheel = (e) => {
-               e.preventDefault();
-          }
-          const handleKeyDown = (e) => {
-               if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-                    e.preventDefault();
-               }
-          }
-          const inputElement = numberRef.current;
-
-          if (inputElement) {
-               inputElement.addEventListener("wheel", handleWheel, { passive: false });
-               inputElement.addEventListener("keydown", handleKeyDown, { passive: false });
-          }
-
-          //CLEANUP USEeFFECT
-          return () => {
-               inputElement.removeEventListener("wheel", handleWheel)
-               inputElement.removeEventListener("keydown", handleKeyDown)
-          }
-
-     }, []);
+     // GETTING CURREN DATE
+     const newDate = new Date();
+     const toDay = format(newDate, 'yyyy-MM-dd')
 
 
      // SINGLE SERVICE DATA API
@@ -81,6 +60,7 @@ export default function MakeAppointmentPopup({ serviceId: treamentId, closeModal
           name: user?.displayName,
           email: user?.email,
           serviceTitle: service?.service,
+          toDay: null,
      });
 
      //BOOKED SUBMITTING
@@ -102,24 +82,22 @@ export default function MakeAppointmentPopup({ serviceId: treamentId, closeModal
                // serviceCharge: service?.price
           }
      });
-     let currentDate = new Date()
-     console.log(currentDate)
 
-     const onHandleBooking = async (data) => {
-          const { name, email, phoneNumber } = data;
-          let currentDate = new Date().toJSON().slice(0, 10);
+     //FORM SUBMITTING
+     const onHandleBooking = async (event) => {
+          event.preventDefault();
+          const formData = new FormData(event.target);
+          const bookingData = Object.fromEntries(formData);
 
           // booking new service
           const bookedInfo = {
-               serviceId: serviceId,
-               bookingDate: currentDate,
-               status: "Pending",
-               payment: "Due",
-               name,
-               email,
-               phoneNumber,
-          }
-
+               ...bookingData,
+               toDay: toDay,
+               service_id: treamentId,
+               status: "pending",
+               payment: "due",
+          };
+          console.log(bookedInfo);
           // insert new bookings
           const res = await mutateAsync(bookedInfo);
           if (res.data.acknowledged) {
@@ -137,7 +115,32 @@ export default function MakeAppointmentPopup({ serviceId: treamentId, closeModal
 
      };
 
+     //number key remove
+     const numberRef = useRef(null);
 
+     useEffect(() => {
+          const handleWheel = (e) => {
+               e.preventDefault();
+          }
+          const handleKeyDown = (e) => {
+               if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+                    e.preventDefault();
+               }
+          }
+          const inputElement = numberRef.current;
+
+          if (inputElement) {
+               inputElement.addEventListener("wheel", handleWheel, { passive: false });
+               inputElement.addEventListener("keydown", handleKeyDown, { passive: false });
+          }
+
+          //CLEANUP useEffect
+          return () => {
+               inputElement.removeEventListener("wheel", handleWheel)
+               inputElement.removeEventListener("keydown", handleKeyDown)
+          }
+
+     }, []);
      /**********************************************************************************************
                                                   UI LAYOUT
      *********************************************************************************************/
@@ -150,43 +153,47 @@ export default function MakeAppointmentPopup({ serviceId: treamentId, closeModal
                          onClick={() => closeModal()}
                     ><MdCancel className="text-red text-3xl" /></button>
                </div>
-               <Form method="POST" id="appoinemt-form"
+
+               {/* BOOKING FORM  */}
+               <Form
+                    onSubmit={onHandleBooking}
                     className="w-full flex flex-col items-center justify-center gap-y-2"
                >
-                    {/* DATE  */}
-                    <label htmlFor="Date"
-                         className="w-full"
-                    >
-                         <span className="text-[#899694] text-sm">Appointment Date</span>
+                    {/* DATE field */}
+                    <div className="w-full">
+                         <label htmlFor="Date">
+                              <span className="text-[#899694] text-sm">Appointment Date</span>
+                         </label>
                          <br />
                          <input type="Date"
-                              name="date"
+                              name="appointment_date"
                               aria-label="Appointment Date"
-                              defaultValue={currentDate}
+                              // value={toDay}
+                              defaultValue={toDay}
+                              min={toDay}
                               className="h-11 w-full rounded-md focus:outline-none px-3 text-sm font-medium"
                          />
-                    </label>
 
-                    {/* name  */}
-                    <label htmlFor="name"
-                         className="w-full"
-                    >
-                         <span className="text-[#899694] text-sm">Your Name</span>
+                    </div>
+                    {/* name field  */}
+                    <div className="w-full">
+                         <label htmlFor="name">
+                              <span className="text-[#899694] text-sm">Your Name</span>
+                         </label>
                          <br />
                          <input type="text"
-                              name="name"
+                              name="customer_name"
                               aria-label="Name"
                               defaultValue={bookedInfo.name}
                               className="h-11 w-full rounded-md focus:outline-none px-3 text-sm font-medium"
                          />
-                    </label>
+                    </div>
 
-
-                    {/* Email  */}
-                    <label htmlFor="email"
-                         className="w-full"
-                    >
-                         <span className="text-[#899694] text-sm">Your Email</span>
+                    {/* Email field  */}
+                    <div className="w-full">
+                         <label htmlFor="email">
+                              <span className="text-[#899694] text-sm">Your Email</span>
+                         </label>
                          <br />
                          <input type="email"
                               readOnly
@@ -195,21 +202,23 @@ export default function MakeAppointmentPopup({ serviceId: treamentId, closeModal
                               defaultValue={bookedInfo.email}
                               className="h-11 w-full rounded-md focus:outline-none px-3 text-sm font-medium"
                          />
-                    </label>
+                    </div>
 
-                    {/* NUMBER  */}
-                    <label htmlFor="Customer Number"
-                         className="w-full"
-                    >
-                         <span className="text-[#899694] text-sm">Your Number</span>
+                    {/* NUMBER field */}
+                    <div className="w-full">
+                         <label htmlFor="Customer Number">
+                              <span className="text-[#899694] text-sm">Your Number</span>
+                         </label>
                          <br />
                          <input type="number"
-                              name="customerNumber"
+                              name="customer_number"
                               aria-label="Customer Number"
                               ref={numberRef}
                               className="h-11 w-full rounded-md focus:outline-none px-3 text-sm font-medium"
                          />
-                    </label>
+                    </div>
+
+                    {/* SERVICE CHARGE  */}
                     <p><strong>Your service  charged will be <span className="text-xl text-primary">${service?.price}</span> </strong></p>
 
                     {/* SUBBIT BUTTON  */}
@@ -218,7 +227,6 @@ export default function MakeAppointmentPopup({ serviceId: treamentId, closeModal
                          value={"Confirm Booking"}
                          className="w-full capitalize px-7 py-3 h-12 text-white bg-primary rounded-[5px] font-medium"
                     >Confirm Booking</button>
-
                </Form>
           </div>
      )
