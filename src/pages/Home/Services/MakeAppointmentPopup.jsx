@@ -8,6 +8,7 @@ import withReactContent from 'sweetalert2-react-content'
 import { MdCancel } from "react-icons/md";
 import { useAuth } from "../../../hooks";
 import { format } from "date-fns";
+import useNumberField from "../../../hooks/useNumberField";
 
 
 
@@ -47,10 +48,14 @@ export default function MakeAppointmentPopup({ serviceId: treamentId, closeModal
      const queryClient = useQueryClient(); //QUERY CLIENT
      const { user } = useAuth();   // CURRENT USER 
      const MySwal = withReactContent(Swal);
+
      // GETTING CURREN DATE
      const newDate = new Date();
      const toDay = format(newDate, 'yyyy-MM-dd')
 
+     //number key remove
+     const numberRef = useRef(null);
+     const [value] = useNumberField(numberRef);
 
      // SINGLE SERVICE DATA API
      const { data: service, isLoading } = useQuery(bookingQuery(treamentId));
@@ -115,32 +120,8 @@ export default function MakeAppointmentPopup({ serviceId: treamentId, closeModal
 
      };
 
-     //number key remove
-     const numberRef = useRef(null);
 
-     useEffect(() => {
-          const handleWheel = (e) => {
-               e.preventDefault();
-          }
-          const handleKeyDown = (e) => {
-               if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-                    e.preventDefault();
-               }
-          }
-          const inputElement = numberRef.current;
 
-          if (inputElement) {
-               inputElement.addEventListener("wheel", handleWheel, { passive: false });
-               inputElement.addEventListener("keydown", handleKeyDown, { passive: false });
-          }
-
-          //CLEANUP useEffect
-          return () => {
-               inputElement.removeEventListener("wheel", handleWheel)
-               inputElement.removeEventListener("keydown", handleKeyDown)
-          }
-
-     }, []);
      /**********************************************************************************************
                                                   UI LAYOUT
      *********************************************************************************************/
