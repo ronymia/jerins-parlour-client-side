@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 
 export default function CustomeNumberField({
+    require,
     disabled,
     readOnly,
     name,
@@ -58,7 +59,7 @@ export default function CustomeNumberField({
                 defaultValue={defaultValue}
                 min={min}
                 max={max}
-                placeholder={`${placeholder}${require && "*"}`}
+                placeholder={placeholder`${require && "*"}`}
                 onChange={onChange}
                 ref={inputRef}
                 className="h-11 rounded-md focus:outline-none px-3 text-sm font-medium"
