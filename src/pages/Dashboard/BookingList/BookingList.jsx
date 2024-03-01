@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "../../../hooks";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
-import { DeleteBooking, getAllBookings } from "../../../apis/Dashboard/booking-page";
+import { getAllBookings } from "../../../apis/Dashboard/booking-page";
 import DnaLoader from "../../Shared/Loader/DnaLoader/DnaLoader";
 
 
@@ -22,15 +22,14 @@ export default function BookingList() {
      const { data: bookings = [], isPending } = useQuery(getAllBookings(user?.email));
 
      // cancel booking function
-     const {mutateAsync}=useMutation(DeleteBooking())
-     // const { mutateAsync } = useMutation({
-     //      mutationFn: async (bookedId) => await axios.delete(`/cancelBooked/${bookedId}`),
-     //      onSuccess: () => {
-     //           queryClient.invalidateQueries({
-     //                queryKey: ['bookings']
-     //           })
-     //      }
-     // })
+     const { mutateAsync } = useMutation({
+          mutationFn: async (bookedId) => await axios.delete(`/cancelBooked/${bookedId}`),
+          onSuccess: () => {
+               queryClient.invalidateQueries({
+                    queryKey: ['bookings']
+               })
+          }
+     });
 
      // DELETE BOOKING
      const handleCancelBooked = async (bookedId) => {
