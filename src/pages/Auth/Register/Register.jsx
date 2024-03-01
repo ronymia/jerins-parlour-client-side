@@ -1,21 +1,21 @@
-import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import { useAuth } from '../../../hooks';
-import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
+import { ErrorMessage } from '@hookform/error-message';
 
 // TODO : input field error 
 // register error 
 
 export default function Register() {
      const navigate = useNavigate();
-     const location = useLocation();
      const queryClient = useQueryClient();
-     const { createNewUser, updateUser } = useAuth();
-     const { register, handleSubmit, reset } = useForm();
+     const { createNewUser, updateUser } = useAuth(); // user auth provider
 
+     // user location track
+     const location = useLocation();
      const from = location.state?.from?.pathname || "/";
 
 
@@ -29,7 +29,12 @@ export default function Register() {
           }
      })
 
-
+     const {
+          register,
+          handleSubmit,
+          formState: { errors, isSubmitting },
+          reset,
+     } = useForm(); /// react-hook-form
      const userInfoSubmit = async (data) => {
           const { fullName, email, password } = data;
 
@@ -73,11 +78,21 @@ export default function Register() {
                          placeholder='Full name'
                          {...register("fullName")}
                     />
+                    <ErrorMessage
+                         errors={errors}
+                         name="name"
+                         render={({ message }) => <p role='alert' aria-label='error massage'>{message}</p>}
+                    />
 
                     <input type="email"
                          className='w-full h-11 border-b border-[#C5C5C5] px-2 focus:outline-none placeholder:text-sm font-medium placeholder:capitalize'
                          placeholder='email'
                          {...register("email")}
+                    />
+                    <ErrorMessage
+                         errors={errors}
+                         name="email"
+                         render={({ message }) => <p role='alert' aria-label='error massage'>{message}</p>}
                     />
 
                     <input type="password"
@@ -85,16 +100,26 @@ export default function Register() {
                          placeholder="password"
                          {...register("password")}
                     />
+                    <ErrorMessage
+                         errors={errors}
+                         name="password"
+                         render={({ message }) => <p role='alert' aria-label='error massage'>{message}</p>}
+                    />
 
                     <input type="password"
                          className='w-full h-11 border-b border-[#C5C5C5] px-2 focus:outline-none placeholder:text-sm font-medium placeholder:capitalize'
                          placeholder="Confirm password"
                          {...register("confirmPassword")}
                     />
+                    <ErrorMessage
+                         errors={errors}
+                         name="password"
+                         render={({ message }) => <p role='alert' aria-label='error massage'>{message}</p>}
+                    />
 
-                    <button type="submit" disabled={isLoading}
+                    <button type="submit" disabled={isLoading || isSubmitting}
                          className='w-full h-11 bg-primary text-lg text-white mt-2 tracking-widest cursor-pointer rounded'
-                    >{isLoading ? "loading" : "Create an account"}</button>
+                    >{isLoading || isSubmitting ? "loading" : "Create an account"}</button>
                </form>
                <p className='capitalize mt-5 block text-center font-medium text-sm md:text-base'>
                     already have an account ?

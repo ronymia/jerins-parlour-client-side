@@ -12,9 +12,23 @@ export default {
       colors: {
         primary: "#F63E7B",
         gray: "#707070",
+        info: "#5881ff",
+        success: "#36d399",
+        warning: "#FFDB67",
+        error: "#ff8369",
       }
     },
   },
-  plugins: [],
+
+  // daisyUI config
+  daisyui: {
+    themes: [
+      {
+        default: {},
+      }
+    ]
+  },
+
+  plugins: [require("daisyui")],
 }
 

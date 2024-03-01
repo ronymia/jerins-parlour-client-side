@@ -12,7 +12,7 @@ const SideNav = () => {
                {
                     isAdmin ?
                          <>
-                              <NavLink to={"/dashboard/orderList"}
+                              <NavLink to={"/dashboard/order-list"}
                                    className={({ isActive }) =>
                                         `${isActive
                                              ? "bg-primary text-white tracking-wider rounded-md"
@@ -45,7 +45,7 @@ const SideNav = () => {
                          </>
                          :
                          <>
-                              <NavLink to={"/dashboard/bookingList"}
+                              <NavLink to={"/dashboard/booking-list"}
                                    className={({ isActive }) =>
                                         `${isActive
                                              ? "bg-primary text-white tracking-wider rounded-md"
@@ -53,7 +53,7 @@ const SideNav = () => {
                                         } font-medium h-11 w-full cursor-pointer flex justify-start items-center pl-6`
                                    }
                               >
-                                   Book List
+                                   Booking List
                               </NavLink>
                               <NavLink to={"/dashboard/review"}
                                    className={({ isActive }) =>

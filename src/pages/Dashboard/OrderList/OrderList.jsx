@@ -1,31 +1,21 @@
-import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import DnaLoader from "../../Shared/Loader/DNALoader/DNALoader";
+// import { getOrderList } from "../../../loaderAction/Dashboard/order-list";
 
 
 
-
-// getting bookings api
 export const getOrderList = () => ({
      queryKey: ["orderList"],
      queryFn: async () => {
-          const { data } = await axios.get(`/orderList`, {
+          const { data } = await axios.get(`/order-list`, {
                headers: {
                     authorization: `Bearer ${localStorage.getItem('access-token')}`
                }
           });
           return data;
      }
-})
+ })
 
-// orderList loader
-export const loader = (queryClient) => async () => {
-     const orderList = await getOrderList();
-     return (
-          queryClient.getQueryData(orderList.queryKey) ??
-          (await queryClient.fetchQuery(orderList))
-     )
-}
 
 export default function OrderList() {
      const { data: orderList = [], isLoadings } = useQuery(getOrderList());

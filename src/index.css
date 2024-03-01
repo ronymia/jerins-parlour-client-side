@@ -10,6 +10,13 @@
           @apply font-poppins
      }
 }
+/* a:active,
+input[type="button"]:active,
+button[type="button"]:active,
+button[type="submit"]:active {
+     transform: scale(0.98);
+     transition: all 0.2s;
+} */
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,

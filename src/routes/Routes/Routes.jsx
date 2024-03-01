@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import { QueryClient } from "@tanstack/react-query";
 import MainLayouts from "../../layouts/MainLayouts";
@@ -10,7 +9,7 @@ import Dashboard from "../../pages/Dashboard/Dhashboard/Dashboard";
 import BookingList from "../../pages/Dashboard/BookingList/BookingList";
 import Review, { action as reviewAction } from "../../pages/Dashboard/Review/Review";
 import History from "../../pages/Dashboard/History/History";
-import OrderList, { loader as orderLoader } from "../../pages/Dashboard/OrderList/OrderList";
+import OrderList from "../../pages/Dashboard/OrderList/OrderList";
 import AddService from "../../pages/Dashboard/AddService/AddService";
 import MakeAdmin, { loader as userLoader } from "../../pages/Dashboard/MakeAdmin/MakeAdmin";
 
@@ -45,7 +44,8 @@ export const router = createBrowserRouter([
                     element: <PrivateRoute><Dashboard /></PrivateRoute>,
                     children: [
                          {
-                              path: "/dashboard/bookingList",
+                              index: true,
+                              path: "/dashboard/booking-list",
                               element: <BookingList />
                          },
                          {
@@ -58,8 +58,8 @@ export const router = createBrowserRouter([
                               element: <History />
                          },
                          {
-                              path: "/dashboard/orderList",
-                              loader: orderLoader(queryClient),
+                              path: "/dashboard/order-list",
+                              // loader: orderLoader(queryClient),
                               element: <AdminRoute><OrderList /></AdminRoute>
                          },
                          {

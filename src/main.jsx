@@ -2,15 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { RouterProvider } from 'react-router-dom';
-import AuthProvider from './contexts/AuthProvider';
+import AuthProvider from './contexts/AuthProvider'; // Auth provider
 import { QueryClient, QueryClientProvider, } from '@tanstack/react-query';
-import { router } from './routes/Routes/Routes.jsx';
+import { router } from './routes/Routes/Routes.jsx'; // react router
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import axios from 'axios';
 
 //TODO : change it from .env
-// base url 
+// Axios defaults settings
 axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
+axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('access-token')}`
 
 //react query
 const queryClient = new QueryClient({

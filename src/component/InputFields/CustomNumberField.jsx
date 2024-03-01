@@ -1,28 +1,26 @@
 import { useEffect } from "react";
 
-export default function CustomeNumberField({
-    require,
-    disabled,
-    readOnly,
-    name,
+export default function CustomNumberField({
+    register,
+    required = false,
+    readOnly = false,
     id,
-    value,
+    name,
     defaultValue,
     min,
     max,
     placeholder,
-    onChange,
     error,
     label
 }) {
-    // FUNCTIONALITY START 
+    // Functionality START 
     useEffect(() => {
         //WHEEL
         const handleWheel = (e) => {
             e.preventDefault();
         }
 
-        // UP&DOWNKEY
+        // KeyDown
         const handleKeyDown = (e) => {
             e.prreventDefault();
         };
@@ -42,33 +40,45 @@ export default function CustomeNumberField({
     return (
         <div className="flex flex-col gap-y-2">
             {/* LABEL */}
-            <label htmlFor={id}
-                className="text-[#899694] text-sm"
-            >
-                <span>{label}</span>
-            </label>
+            {label &&
+                <label htmlFor={id}
+                    className="text-[#899694] text-sm"
+                >
+                    <span>{label`${required && "*"}`}</span>
+                </label>
+            }
 
             {/* FIELD */}
             <input
-                disabled={disabled}
-                readOnly={readOnly}
                 type={"number"}
-                name={name}
                 id={id}
-                value={value}
                 defaultValue={defaultValue}
-                min={min}
-                max={max}
-                placeholder={placeholder`${require && "*"}`}
-                onChange={onChange}
+                placeholder={placeholder}
+                readOnly={readOnly}
                 ref={inputRef}
                 className="h-11 rounded-md focus:outline-none px-3 text-sm font-medium"
+                {...register(name, {
+                    required: {
+                        value: required,
+                        message: `${name} is required`
+                    },
+                    min: {
+                        value: min,
+                        message: `${name} must be getter then ${min} character`
+                    },
+                    max: {
+                        value: max,
+                        message: `${name} must be less then ${max} character`
+                    },
+                })}
             />
 
             {/* VALIDATION MASSAGE */}
-            <label htmlFor={id}>
-                <span>{error}</span>
-            </label>
+            {error &&
+                <label htmlFor={id}>
+                    <span>{error}</span>
+                </label>
+            }
         </div>
     );
 }

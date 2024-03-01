@@ -31,7 +31,7 @@ export default function ServiceCard({ service }) {
                {
                     popupState && <Popup
                          open={popupState}
-                         closeOnDocumentClick
+                         closeOnDocumentClick={false}
                          lockScroll
                          overlayStyle={{
                               background: "rgba(0,0,0,0.5)",

@@ -1,58 +1,36 @@
 import axios from "axios";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "../../../hooks";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
+import { DeleteBooking, getAllBookings } from "../../../apis/Dashboard/booking-page";
+import DnaLoader from "../../Shared/Loader/DnaLoader/DnaLoader";
 
 
 
 
-// getting bookings api
-export const getAllBookings = (email) => ({
-     queryKey: ["bookings", email],
-     queryFn: async () => {
-          const { data } = await axios.get(`/bookings?email=${email}`, {
-               headers: {
-                    authorization: `Bearer ${localStorage.getItem('access-token')}`
-               }
-          });
-          return data;
-     }
-})
-
-
-// try to use loader but fail 
-// * reason i send query params email
-// bookings loader
-// export const loader = (queryClient) => async () => {
-//      const bookings = await getAllBookings();
-//      return (
-//           queryClient.getQueryData(bookings.queryKey) ??
-//           (await queryClient.fetchQuery(bookings))
-//      )
-// }
 
 
 
 
 export default function BookingList() {
-     const [axiosSecure] = useAxiosSecure();
-     const { user } = useAuth();
      const queryClient = useQueryClient();
+     const { user } = useAuth(); // user details
      const deleteBookingSwal = withReactContent(Swal);
 
-     const { data: bookings = [] } = useQuery(getAllBookings(user?.email));
+     // Getting all booking list
+     const { data: bookings = [], isPending } = useQuery(getAllBookings(user?.email));
 
-     // bookings cancle
-     const { mutateAsync } = useMutation({
-          mutationFn: async (bookedId) => await axiosSecure.delete(`/cancelBooked/${bookedId}`),
-          onSuccess: () => {
-               queryClient.invalidateQueries({
-                    queryKey: ['bookings']
-               })
-          }
-     })
+     // cancel booking function
+     const {mutateAsync}=useMutation(DeleteBooking())
+     // const { mutateAsync } = useMutation({
+     //      mutationFn: async (bookedId) => await axios.delete(`/cancelBooked/${bookedId}`),
+     //      onSuccess: () => {
+     //           queryClient.invalidateQueries({
+     //                queryKey: ['bookings']
+     //           })
+     //      }
+     // })
 
      // DELETE BOOKING
      const handleCancelBooked = async (bookedId) => {
@@ -78,7 +56,7 @@ export default function BookingList() {
 
      return (
           <div className="pb-6">
-               <div className="grid grid-cols-2 items-center justify-items-center gap-y-8">
+               {isPending ? <DnaLoader /> : <div className="grid grid-cols-2 items-center justify-items-center gap-y-8">
                     {
                          bookings.map(booked => <div key={booked._id}
                               className="flex flex-col gap-2 w-96 bg-white rounded-2xl relative">
@@ -100,7 +78,7 @@ export default function BookingList() {
                               </button>
                          </div>)
                     }
-               </div>
+               </div>}
 
           </div>
      )

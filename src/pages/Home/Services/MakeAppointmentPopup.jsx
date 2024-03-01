@@ -27,20 +27,6 @@ const bookingQuery = (serviceId) => ({
 })
 
 
-// export const loader = (queryClient) => async ({ params }) => {
-//      const query = await bookingQuery(params.serviceId);
-//      return (
-//           queryClient.getQueryData(query.queryKey) ??
-//           (await queryClient.fetchQuery(query))
-//      )
-// }
-
-// export const action = (queryClient) =>
-//      async ({ request }) => {
-//           const formData = await request.formData();
-//           const name = formData.get("name");
-//           console.log(name)
-//      }
 
 
 export default function MakeAppointmentPopup({ serviceId: treamentId, closeModal }) {
@@ -57,7 +43,7 @@ export default function MakeAppointmentPopup({ serviceId: treamentId, closeModal
      const [value] = useNumberField(numberRef);
 
      // SINGLE SERVICE DATA API
-     const { data: service, isLoading } = useQuery(bookingQuery(treamentId));
+     const { data: service, isPending } = useQuery(bookingQuery(treamentId));
 
      //BOOKED FORM STATE
      const [bookedInfo, setBookedInfo] = useState({
@@ -91,7 +77,7 @@ export default function MakeAppointmentPopup({ serviceId: treamentId, closeModal
                status: "pending",
                payment: "due",
           };
-          
+
           // insert new bookings
           const res = await mutateAsync(bookedInfo);
           if (res.data.acknowledged) {

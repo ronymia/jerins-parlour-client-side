@@ -21,9 +21,9 @@ export default function Header() {
 
           {user?.uid && <NavLink to={
                isAdmin ?
-                    "/dashboard/orderList"
+                    "/dashboard/order-list"
                     :
-                    "/dashboard/bookingList"}>Dashboard</NavLink>}
+                    "/dashboard/booking-list"}>Dashboard</NavLink>}
           {
                user?.uid ?
                     <button type="button"
