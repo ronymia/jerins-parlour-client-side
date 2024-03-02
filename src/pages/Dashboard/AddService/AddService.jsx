@@ -18,8 +18,9 @@ export default function AddService() {
 
                          <div className="flex flex-col gap-2 items-start">
                               <label htmlFor="description">Description</label>
-                              <textarea name="description"
+                              <textarea
                                    id=""
+                                   name="description"
                                    placeholder="Enter Description"
                                    className="h-28 w-full border border-[#C9C9C9] focus:outline-none rounded-sm placeholder:text-sm placeholder:font-normal placeholder:text-[#C9C9C9] px-4 pt-4 resize-none"
                               ></textarea>
@@ -28,7 +29,10 @@ export default function AddService() {
                     </div>
                     <div className="flex flex-col items-start gap-2">
                          <label htmlFor="Image">Image</label>
-                         <input type="file" name="serviceImage" id=""
+                         <input
+                              type="file"
+                              id=""
+                              name="serviceImage"
                               className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 
                               file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#FFEAF3] file:text-primary hover:file:bg-violet-100"
                          />
