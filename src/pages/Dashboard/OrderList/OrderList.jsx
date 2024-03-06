@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import DnaLoader from "../../Shared/Loader/DNALoader/DNALoader";
+import DnaLoader from "../../Shared/Loader/DnaLoader/DnaLoader";
 // import { getOrderList } from "../../../loaderAction/Dashboard/order-list";
 
 

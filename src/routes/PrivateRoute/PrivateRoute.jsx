@@ -1,6 +1,6 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../hooks";
-import DnaLoader from "../../pages/Shared/Loader/DNALoader/DNALoader";
+import DnaLoader from "../../pages/Shared/Loader/DnaLoader/DnaLoader";
 
 export default function PrivateRoute({ children }) {
      const location = useLocation();

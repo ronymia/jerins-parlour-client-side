@@ -1,5 +1,5 @@
 import { Navigate, useLocation } from "react-router";
-import DnaLoader from "../../pages/Shared/Loader/DNALoader/DNALoader";
+import DnaLoader from "../../pages/Shared/Loader/DnaLoader/DnaLoader";
 import { useAuth } from "../../hooks";
 import useAdmin from "../../hooks/useAdmin";
 
