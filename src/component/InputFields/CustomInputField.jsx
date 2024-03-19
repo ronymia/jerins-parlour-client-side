@@ -1,12 +1,12 @@
 
-export default function CustomTextField({
+export default function CustomInputField({
     label,
     required = false,
-    disabled,
-    readOnly,
+    disabled = false,
+    readOnly = false,
     type,
-    name,
     id,
+    name,
     value,
     defaultValue,
     placeholder,
@@ -19,31 +19,33 @@ export default function CustomTextField({
         <div className="flex flex-col gap-y-2">
             {/* LABEL */}
             {label &&
-                <label htmlFor={id}>
-                    <span>{label}</span>
+                <label htmlFor={id}
+                    className="text-[#899694] text-sm"
+                >
+                    <span>{label`${required && "*"}`}</span>
                 </label>
             }
 
             {/* INPUT FIELD */}
             <input
                 required={required}
-                disabled={disabled}
                 readOnly={readOnly}
-                type={"text"}
-                name={name}
+                disabled={disabled}
+                type={type}
                 id={id}
+                name={name}
                 value={value}
                 defaultValue={defaultValue}
-                placeholder={`${placeholder}${required ? "*" : ""}`}
+                placeholder={placeholder}
                 onChange={onChange}
                 onBlur={onBlur}
                 className={className}
             />
 
-            {/* Validation massage */}
+            {/* Validation Massage */}
             {error &&
                 <label htmlFor={id}>
-                    <span>{error}</span>
+                    <p role="alert" aria-label="Error Massage">{error}</p>
                 </label>
             }
         </div>

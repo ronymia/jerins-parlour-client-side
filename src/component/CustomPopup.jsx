@@ -12,7 +12,7 @@ export default function CustomPopup({
             lockScroll={true}
         >
             <div
-                className={`relative bg-base-300 shadow-xl rounded-xl border-primary-content border-2 overflow-hidden w-[95vw] sm:w-[70vw] md:w-[70vw] lg:w-[50vw] ${popupClasses} max-h-[90vh] `}
+                className={`relative max-h-[90vh] `}
             >
                 <button
                     onClick={() =>
@@ -21,7 +21,7 @@ export default function CustomPopup({
                             open: false,
                         })
                     }
-                    className="absolute high-zindex top-3 right-3 w-9 h-9 rounded-full bg-primary-content flex justify-center items-center"
+                    className="absolute top-3 right-3 w-9 h-9 rounded-full flex justify-center items-center"
                 >
                     <FiX className="text-primary text-xl" />
                 </button>

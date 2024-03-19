@@ -1,10 +1,10 @@
-import CustomTextField from "./CustomTextField";
+import CustomInputField from "./CustomInputField";
 import CustomNumberField from "./CustomNumberField";
 import CustomEmailField from "./CustomEmailField";
 import CustomPasswordField from "./CustomPasswordField";
 
 export {
-    CustomTextField,
+    CustomInputField,
     CustomNumberField,
     CustomEmailField,
     CustomPasswordField,

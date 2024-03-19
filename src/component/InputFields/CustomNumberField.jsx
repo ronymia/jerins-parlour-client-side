@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 
 export default function CustomNumberField({
-    register,
     required = false,
     readOnly = false,
+    disabled = false,
     id,
     name,
     defaultValue,
@@ -52,31 +52,21 @@ export default function CustomNumberField({
             <input
                 type={"number"}
                 id={id}
+                name={name}
+                min={min}
+                max={max}
                 defaultValue={defaultValue}
                 placeholder={placeholder}
                 readOnly={readOnly}
+                disabled={disabled}
                 ref={inputRef}
-                className="h-11 rounded-md focus:outline-none px-3 text-sm font-medium"
-                {...register(name, {
-                    required: {
-                        value: required,
-                        message: `${name} is required`
-                    },
-                    min: {
-                        value: min,
-                        message: `${name} must be getter then ${min} character`
-                    },
-                    max: {
-                        value: max,
-                        message: `${name} must be less then ${max} character`
-                    },
-                })}
+                className=""
             />
 
             {/* VALIDATION MASSAGE */}
             {error &&
                 <label htmlFor={id}>
-                    <span>{error}</span>
+                    <p role="alert" aria-label="Error Message">{error}</p>
                 </label>
             }
         </div>

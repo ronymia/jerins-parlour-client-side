@@ -5,15 +5,8 @@ import axios from "axios";
 export const getServices = () => ({
     queryKey: ["services"],
     queryFn: async ({ signal }) => {
-        return await axios.get("/v1/services", {
-            signal: signal
-        })
-            .then(response => {
-                return response.data;
-            }).catch(error => {
-                // console.log('axios', error);
-                throw error;
-            });
+        const { data } = await axios.get("/v1/services", {signal});
+        return data;
     }
 });
 

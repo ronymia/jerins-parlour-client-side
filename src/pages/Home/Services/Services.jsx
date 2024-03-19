@@ -8,8 +8,7 @@ import { getServices } from '../../../apis/Home/Services';
 
 
 export default function Services() {
-     const { data: services = [], isPending, error } = useQuery(getServices());
-     console.log(error)
+     const { data: services = [], isPending } = useQuery(getServices());
 
 
 

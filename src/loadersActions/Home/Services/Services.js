@@ -6,7 +6,7 @@ export const getServices = () => ({
     queryKey: ["services"],
     queryFn: async ({ signal }) => {
         const baseURL = "http://localhost:5000";
-        const url = new URL("/v1/services", baseURL);
+        const url = new URL("/v1/service", baseURL);
         const request = new Request(url, {
             signal,
             method: "GET",
@@ -14,11 +14,8 @@ export const getServices = () => ({
                 "Content-Type": "application/json",
             }
         })
+
         const response = await fetch(request);
-        if (!response.ok) {
-            // console.log(response)
-            throw new Response()
-        }
         return response.json();
     }
 });
