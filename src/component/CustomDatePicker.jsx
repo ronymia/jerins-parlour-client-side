@@ -10,7 +10,6 @@ import {
   addMonths,
   subYears,
   addYears,
-  format,
 } from "date-fns";
 
 export default function CustomDatePicker({
@@ -26,6 +25,8 @@ export default function CustomDatePicker({
   readOnly = true,
   error,
   disabledDates = [],
+  disableBeforeDate,
+  disableAfterDate,
 }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [calendarVisible, setCalendarVisible] = useState(false);
@@ -104,7 +105,7 @@ export default function CustomDatePicker({
 
     return daysInMonth.map((day) => {
       const isSelected = selectedDate && isSameDay(day, new Date(selectedDate));
-      const isDisabled = disabledDates.some((disabledDate) => isSameDay(day, disabledDate));
+      const isDisabled = disabledDates.some((disabledDate) => isSameDay(day, disabledDate)) || (disableBeforeDate && day < disableBeforeDate) || (disableAfterDate && day > disableAfterDate);;
 
       return (
         <button
@@ -187,4 +188,5 @@ export default function CustomDatePicker({
 CustomDatePicker.propTypes = {
   defaultDate: PropTypes.instanceOf(Date),
   disabledDates: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
+  disableBeforeDate: PropTypes.instanceOf(Date),
 };
