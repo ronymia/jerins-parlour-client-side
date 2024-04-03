@@ -35,9 +35,10 @@ export default function Register() {
           formState: { errors, isSubmitting },
           reset,
      } = useForm(); /// react-hook-form
+
+     
      const userInfoSubmit = async (data) => {
           const { fullName, email, password } = data;
-
 
           try {
                //  create new user

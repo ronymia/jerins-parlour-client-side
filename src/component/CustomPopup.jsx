@@ -27,7 +27,7 @@ export default function CustomPopup({
                 </button>
 
                 {popupOption?.title && (
-                    <div className="w-full px-8 py-5 text-primary font-semibold text-2xl absolute top-0 z-50 bg-base-300">
+                    <div className="w-full px-8 py-5 text-primary font-semibold text-2xl absolute top-0">
                         {popupOption?.title}
                     </div>
                 )}

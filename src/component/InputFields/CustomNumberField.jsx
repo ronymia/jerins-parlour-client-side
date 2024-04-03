@@ -1,56 +1,58 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import PropTypes from "prop-types";
 
 export default function CustomNumberField({
+    id,
+    name,
+    label,
+    min,
+    max,
+    defaultValue,
+    placeholder,
+    error,
+    className,
     required = false,
     readOnly = false,
     disabled = false,
-    id,
-    name,
-    defaultValue,
-    min,
-    max,
-    placeholder,
-    error,
-    label
 }) {
-    // Functionality START 
+    const inputRef = useRef();
+
     useEffect(() => {
-        //WHEEL
+        const inputElement = inputRef.current;
+
         const handleWheel = (e) => {
             e.preventDefault();
-        }
-
-        // KeyDown
-        const handleKeyDown = (e) => {
-            e.prreventDefault();
         };
 
-        const inputElement = inputRef.current;
+        const handleKeyDown = (e) => {
+            e.preventDefault();
+        };
+
         if (inputElement) {
             inputElement.addEventListener("wheel", handleWheel, { passive: false });
-            inputElement.addEventListener("keyDown", handleKeyDown, { passive: false });
+            inputElement.addEventListener("keydown", handleKeyDown, { passive: false });
         }
 
-        // CLEAN UP
-        inputElement.removeEventListener("wheel", handleWheel);
-        inputElement.removeEventListener("keyDown", handleKeyDown);
+        return () => {
+            if (inputElement) {
+                inputElement.removeEventListener("wheel", handleWheel);
+                inputElement.removeEventListener("keydown", handleKeyDown);
+            }
+        };
     }, []);
-
 
     return (
         <div className="flex flex-col gap-y-2">
             {/* LABEL */}
-            {label &&
-                <label htmlFor={id}
-                    className="text-[#899694] text-sm"
-                >
-                    <span>{label`${required && "*"}`}</span>
+            {label && (
+                <label htmlFor={id} className="text-[#899694] text-sm">
+                    <span>{label}{required && "*"}</span>
                 </label>
-            }
+            )}
 
             {/* FIELD */}
             <input
-                type={"number"}
+                type="number"
                 id={id}
                 name={name}
                 min={min}
@@ -60,15 +62,23 @@ export default function CustomNumberField({
                 readOnly={readOnly}
                 disabled={disabled}
                 ref={inputRef}
-                className=""
+                className={className}
             />
 
-            {/* VALIDATION MASSAGE */}
-            {error &&
+            {/* VALIDATION MESSAGE */}
+            {error && (
                 <label htmlFor={id}>
-                    <p role="alert" aria-label="Error Message">{error}</p>
+                    <p role="alert" aria-errormessage={error} aria-label="Error Message">{error}</p>
                 </label>
-            }
+            )}
         </div>
     );
 }
+// CustomNumberField.prototype = {
+//     min: PropTypes.number,
+//     max: PropTypes.number,
+//     placeholder: PropTypes.string,
+//     require: PropTypes.bool,
+//     disabled: PropTypes.bool,
+//     readOnly: PropTypes.bool,
+// }

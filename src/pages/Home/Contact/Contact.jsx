@@ -1,15 +1,42 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useState } from 'react';
+import { Controller, useFieldArray, useForm } from 'react-hook-form';
+import CustomInputField from '../../../component/HookFormInputFields/ControllerInputField';
+import InputFieldArray from '../../../component/HookFormInputFields/InputFieldArray';
+import ControllerInputField from '../../../component/HookFormInputFields/ControllerInputField';
+// import { CustomInputField, CustomNumberField } from '../../../component/InputFields';
 
 export default function Contact() {
-     const { register, handleSubmit, reset } = useForm();
 
+     // Form Data state
+     const [formData, setFormData] = useState({
+          first_name: "null",
+          last_name: null,
+          email: null,
+          phone_number: null,
+     });
+
+     // Handle form submit
+     const {
+          control,
+          handleSubmit,
+          reset,
+     } = useForm({
+          mode: "onSubmit",
+          defaultValues: {
+               first_name: formData?.first_name,
+               last_name: formData?.last_name,
+               email: formData?.email,
+               phone_number: formData?.phone_number,
+          }
+     });
+
+     // form data submit
      const onSubmit = (data) => {
-          console.log(data);
-
-          //clear form
-          reset();
-     }
+          console.log(data); // Handle form submission
+          // form to state
+          setFormData({...formData, ...data});
+     };
+     // console.log(formData)
 
      return (
           <div className="py-20 flex flex-col items-center justify-center px-6">
@@ -21,33 +48,57 @@ export default function Contact() {
                <form onSubmit={handleSubmit(onSubmit)}
                     className="w-full md:w-[750px] flex flex-col items-center justify-center gap-6"
                >
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-                         <input type="text"
-                              className="h-14 px-5 py-4 text-base text-black placeholder:text-sm placeholder:text-[#707070] placeholder:capitalize focus:outline-none bg-white rounded-md"
-                              placeholder="first name"
-                              {...register("firstName")}
+                         {/* First Name */}
+                         <ControllerInputField
+                              control={control}
+                              label={"First Name"}
+                              required={true}
+                              id={"first_name"}
+                              name={"first_name"}
+                              placeholder={"First Name"}
+                              className={"h-14 px-5 py-4 text-base text-black placeholder:text-sm placeholder:text-[#707070] placeholder:capitalize focus:outline-none bg-white rounded-md"}
                          />
-                         <input type="text"
-                              className="h-14 px-5 py-4 text-base text-black placeholder:text-sm placeholder:text-[#707070] placeholder:capitalize focus:outline-none bg-white rounded-md"
-                              placeholder="last name"
-                              {...register("lastName")}
+                         {/* Last Name */}
+                         <ControllerInputField
+                              control={control}
+                              required
+                              label={"Last Name"}
+                              id={"last_name"}
+                              name={"last_name"}
+                              placeholder={"Last Name"}
+                              className={"h-14 px-5 py-4 text-base text-black placeholder:text-sm placeholder:text-[#707070] placeholder:capitalize focus:outline-none bg-white rounded-md"}
                          />
-                         <input type="email"
-                              className="h-14 px-5 py-4 text-base text-black placeholder:text-sm placeholder:text-[#707070] placeholder:capitalize focus:outline-none bg-white rounded-md"
-                              placeholder="email address"
-                              {...register("email")}
+                         {/* Email */}
+                         <ControllerInputField
+                              control={control}
+                              required
+                              label={"Email"}
+                              id={"email"}
+                              name={"email"}
+                              placeholder={"Email"}
+                              className={"h-14 px-5 py-4 text-base text-black placeholder:text-sm placeholder:text-[#707070] placeholder:capitalize focus:outline-none bg-white rounded-md"}
                          />
-                         <input type="text"
-                              className="h-14 px-5 py-4 text-base text-black placeholder:text-sm placeholder:text-[#707070] placeholder:capitalize focus:outline-none bg-white rounded-md"
-                              placeholder="phone number"
-                              {...register("phoneNumber")}
+                         {/* Phone Number */}
+                         <CustomNumberField
+                              id={"phone_number"}
+                              name={"phone_number"}
+                              // value={formData?.phone_number}
+                              error={formErrors?.phone_number}
+                              defaultValue={formData?.phone_number}
+                              placeholder={"Phone Number"}
+                              // onChange={handleInputChange}
+                              className={"h-14 px-5 py-4 text-base text-black placeholder:text-sm placeholder:text-[#707070] placeholder:capitalize focus:outline-none bg-white rounded-md"}
                          />
+
                     </div>
-                    <textarea
+
+                    {/* <textarea
                          className="px-5 py-4 text-base text-black placeholder:text-sm placeholder:text-[#707070] placeholder:capitalize focus:outline-none bg-white rounded-md w-full h-40 resize-none"
                          placeholder="Your Message"
                          {...register("message")}
-                    ></textarea>
+                    ></textarea> */}
                     <button type="submit"
                          className="px-7 h-12 text-white bg-primary rounded-[5px]"
                     >Send Message</button>

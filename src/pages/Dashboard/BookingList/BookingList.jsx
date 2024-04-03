@@ -59,7 +59,7 @@ export default function BookingList() {
                     ? <DnaLoader />
                     : <div className="grid grid-cols-2 items-center justify-items-center gap-y-8">
                          {
-                              bookings.map(({ _id, image, describe }) =>
+                              bookings.map(({ _id, image, describe,service }) =>
                                    <div key={_id}
                                         className="flex flex-col gap-2 w-96 bg-white rounded-2xl relative">
                                         <img src={image} alt="serive image" className='w-20 m-6 ' />

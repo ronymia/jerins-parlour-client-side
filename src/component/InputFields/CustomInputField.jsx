@@ -1,6 +1,5 @@
 
 export default function CustomInputField({
-    label,
     required = false,
     disabled = false,
     readOnly = false,
@@ -8,6 +7,7 @@ export default function CustomInputField({
     id,
     name,
     value,
+    label,
     defaultValue,
     placeholder,
     onChange,

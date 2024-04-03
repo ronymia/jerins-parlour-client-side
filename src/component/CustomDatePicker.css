@@ -1,0 +1,47 @@
+.custom-date-picker {
+    position: relative;
+  }
+  
+  .custom-date-picker input {
+    width: 200px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .custom-date-picker table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .custom-date-picker th,
+  .custom-date-picker td {
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .custom-date-picker th {
+    background-color: #f0f0f0;
+  }
+  
+  .custom-date-picker td {
+    cursor: pointer;
+  }
+  
+  .custom-date-picker .selected {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .custom-date-picker .disabled {
+    pointer-events: none;
+    color: #ccc;
+  }
+  
+  .custom-date-picker .disabled:hover {
+    background-color: transparent;
+  }
+  
+  /* You can add more styles based on your design preferences */
+  

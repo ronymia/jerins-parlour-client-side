@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider, } from '@tanstack/react-query';
 import { router } from './routes/Routes/Routes.jsx'; // react router
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import axios from 'axios';
+import { Toaster } from 'react-hot-toast';
 
 //TODO : change it from .env
 // Axios defaults settings
@@ -27,6 +28,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <RouterProvider router={router} />
+        <Toaster/>
       </AuthProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

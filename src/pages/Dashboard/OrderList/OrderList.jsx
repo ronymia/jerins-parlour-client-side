@@ -1,7 +1,13 @@
+import React from 'react';
 import { useQuery } from "@tanstack/react-query";
+import axios from 'axios';
 import DnaLoader from "../../Shared/Loader/DnaLoader/DnaLoader";
-// import { getOrderList } from "../../../loaderAction/Dashboard/order-list";
-
+import {
+     createColumnHelper,
+     flexRender,
+     getCoreRowModel,
+     useReactTable,
+} from '@tanstack/react-table'
 
 
 export const getOrderList = () => ({
@@ -14,51 +20,93 @@ export const getOrderList = () => ({
           });
           return data;
      }
- })
+});
+
+const OrderList = () => {
+     const { data: orderList = [], isLoading } = useQuery(getOrderList());
+
+     const columnHelper = createColumnHelper();
+
+     const columns = [
+          columnHelper.accessor('customer_name', {
+               header: () => 'Name',
+               cell: info => info.getValue(),
+               footer: info => info.column.id,
+          }),
+          columnHelper.accessor('email', {
+               header: () => 'Email',
+               cell: info => info.renderValue(),
+               footer: info => info.column.id,
+          }),
+          columnHelper.accessor('status', {
+               header: () => <span>Status</span>,
+               footer: info => info.column.id,
+          }),
+          columnHelper.accessor('payment', {
+               header: 'Payment',
+               footer: info => info.column.id,
+          }),
+     ]
 
 
-export default function OrderList() {
-     const { data: orderList = [], isLoadings } = useQuery(getOrderList());
-     // console.log(bookings)
-
-     if (isLoadings) {
-          return <DnaLoader />
+     const table = useReactTable({
+          columns,
+          data: orderList,
+          getCoreRowModel: getCoreRowModel(),
+     })
+     if (isLoading) {
+          return <DnaLoader />;
      }
 
      return (
-          <div className="bg-white p-6 rounded-2xl h-full">
-               <div className="table w-full text-sm">
-                    <div className="table-header-group">
-                         <div className="table-row bg-[#F5F6FA] rounded-xl text-[#686868] font-normal h-11">
-                              <div className="table-cell pl-3 pt-3">Name</div>
-                              <div className="table-cell">Email ID</div>
-                              <div className="table-cell">Service</div>
-                              <div className="table-cell">Pay with</div>
-                              <div className="table-cell">Status</div>
-                         </div>
-                    </div>
-
-                    <div className="table-row-group">
-                         {
-                              orderList?.map(booked =>
-                                   <div key={booked._id}
-                                        className="table-row h-11"
-                                   >
-                                        <div className="table-cell pl-3">{booked.name}</div>
-                                        <div className="table-cell pt-5">{booked.email}</div>
-                                        <div className="table-cell">{booked.service}</div>
-                                        <div className="table-cell"><span>Due</span></div>
-                                        <div className="table-cell">
-                                             <span className="text-[#FF4545]">Pending</span>
-                                             {/* <span className="text-[#FFBD3E]">on going</span> */}
-                                             {/* <span className="text-[#009444]">Done</span> */}
-                                        </div>
-                                   </div>
-                              )
-                         }
-                    </div>
-
-               </div>
+          <div className="p-2">
+               <table>
+                    <thead>
+                         {table.getHeaderGroups().map(headerGroup => (
+                              <tr key={headerGroup.id}>
+                                   {headerGroup.headers.map(header => (
+                                        <th key={header.id}>
+                                             {header.isPlaceholder
+                                                  ? null
+                                                  : flexRender(
+                                                       header.column.columnDef.header,
+                                                       header.getContext()
+                                                  )}
+                                        </th>
+                                   ))}
+                              </tr>
+                         ))}
+                    </thead>
+                    <tbody>
+                         {table.getRowModel().rows.map(row => (
+                              <tr key={row.id}>
+                                   {row.getVisibleCells().map(cell => (
+                                        <td key={cell.id}>
+                                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                        </td>
+                                   ))}
+                              </tr>
+                         ))}
+                    </tbody>
+                    {/* <tfoot>
+                         {table.getFooterGroups().map(footerGroup => (
+                              <tr key={footerGroup.id}>
+                                   {footerGroup.headers.map(header => (
+                                        <th key={header.id}>
+                                             {header.isPlaceholder
+                                                  ? null
+                                                  : flexRender(
+                                                       header.column.columnDef.footer,
+                                                       header.getContext()
+                                                  )}
+                                        </th>
+                                   ))}
+                              </tr>
+                         ))}
+                    </tfoot> */}
+               </table>
           </div>
      )
 }
+
+export default OrderList;

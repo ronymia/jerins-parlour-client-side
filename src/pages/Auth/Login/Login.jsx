@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import { useAuth } from '../../../hooks';
 import { CustomEmailField, CustomPasswordField } from "../../../component/InputFields";
 import { useForm } from 'react-hook-form';
+import toast from "react-hot-toast";
+import CustomToaster from "../../../component/CustomToaster";
 
 //TODO : login error
 
@@ -30,7 +32,8 @@ export default function Login() {
           handleSubmit, reset } = useForm();
 
      // Submmitting Form Data
-     const handleOnSubmit = async (data) => {
+     const handleOnSubmit = async (data, e) => {
+          //SET USER DATA TO STATE
           setUserInfo(data);
           const { email, password } = data;
           // user sign in
@@ -38,6 +41,7 @@ export default function Login() {
                const { user } = await userSignIn(email, password);
                if (user?.uid) {
                     //clear form
+                    toast.success("sucess")
                     reset();
                     navigate(from, { replace: true });
                }
@@ -46,7 +50,16 @@ export default function Login() {
                console.log(errorCode);
           }
      }
-     console.log(errors)
+     const onError = (errors) => {
+          const errorsArray = Object.keys(errors).map(field => errors[field].message);
+               toast.custom((t) =>
+                    <CustomToaster
+                         t={t}
+                         type={"error"}
+                         errors={errorsArray}
+                    />
+               );
+     };
      /*========================================================
                                    UI Render
      ========================================================*/
@@ -55,7 +68,7 @@ export default function Login() {
           <div className="w-11/12 md:w-[570px] border border-[#ABABAB] rounded px-6 md:px-10 py-5 bg-white mx-auto my-10">
                <h1 className='text-2xl font-bold capitalize mt-5'>get in touch</h1>
                <form
-                    onSubmit={handleSubmit(handleOnSubmit)}
+                    onSubmit={handleSubmit(handleOnSubmit, onError)}
                     className="flex flex-col gap-y-5 mt-6"
                >
                     {/* Email */}
