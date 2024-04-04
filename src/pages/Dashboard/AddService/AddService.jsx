@@ -1,5 +1,8 @@
+import { useForm } from "react-hook-form"
 
 export default function AddService() {
+     const { register } = useForm({ mode: "onSubmit" })
+
      return (
           <div className="bg-white rounded-2xl p-10 relative">
                <form method="post"
