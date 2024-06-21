@@ -2,22 +2,31 @@ import { useController } from 'react-hook-form';
 
 export default function ControllerInputField({
     control,
-    field,
     id,
     name,
     label,
+    type,
+    placeholder,
     maxLength,
     minLength,
+    max,
+    min,
     pattern,
     required = false,
     readOnly = false,
     disabled = false,
-    minLengthMessage ,
+    minLengthMessage,
     maxLengthMessage,
     patternMessage,
+    maxMessage,
+    minMessage,
+    wrapperClassName,
+    inputClassName,
+    labelClassName,
+    // onChange,
 }) {
-    
-    const { field : field, fieldState } = useController({
+    // console.log(pattern)
+    const { field, fieldState: { error } } = useController({
         name,
         control,
         disabled,
@@ -28,24 +37,36 @@ export default function ControllerInputField({
             },
             maxLength: {
                 value: maxLength,
-                message: maxLengthMessage || "Maximum length exceeded" 
+                message: maxLengthMessage || "Maximum length exceeded"
             },
             minLength: {
                 value: minLength,
                 message: minLengthMessage || "Minimum length not met"
             },
+            max: {
+                value: max,
+                message: maxMessage || "Maximum value exceeded"
+            },
+            min: {
+                value: min,
+                message: minMessage || "Minimum value not met"
+            },
             pattern: {
                 value: pattern,
                 message: patternMessage || "Invalid values"
             },
+            // onChange: (e) => onChange(e)
+
         },
     });
 
+
+
     return (
-        <div className="flex flex-col gap-y-2">
+        <div className={`${wrapperClassName} flex flex-col gap-y-2 justify-start`}>
             {/* LABEL */}
             {label && (
-                <label className="text-[#899694] text-sm">
+                <label className={`${labelClassName} text-back text-sm`}>
                     <span>{label}</span>
                 </label>
             )}
@@ -53,16 +74,21 @@ export default function ControllerInputField({
             {/* INPUT FIELD */}
             <input
                 {...field}
-                type={"text"} // Set input type as needed
+                type={type} // Set input type as needed
                 id={id}
                 readOnly={readOnly}
-                className={`border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500`} 
-                />
+                placeholder={placeholder}
+                aria-invalid={error ? "true" : "false"}
+                className={`${inputClassName} border border-solid border-[#C5C5C5] rounded px-3 py-2 focus:outline-none placeholder:text-sm placeholder:capitalize ${error ? "border-red-500" : ""}`}
+            />
 
             {/* Error Message */}
-            {fieldState.error && (
-                <p className="text-red-500 text-sm" role="alert" aria-label="error message">
-                    {fieldState.error.message}
+            {error && (
+                <p className={`text-red-500 text-sm`}
+                    role="alert"
+                    aria-label="error message"
+                >
+                    {error.message}
                 </p>
             )}
         </div>

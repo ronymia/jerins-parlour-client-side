@@ -1,14 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
 import ServiceCard from './ServiceCard';
 import DnaLoader from "../../Shared/Loader/DnaLoader/DnaLoader"
+import { getAllService } from '../../../apis/Home/Services';
 // import { getServices } from '../../../loadersActions/Home/Services/Services';
-import { getServices } from '../../../apis/Home/Services';
+// import { getServices } from '../../../loadersActions/Home/Services/Services';
+// import { getServices } from '../../../apis/Home/Services';
 
 
 
 
 export default function Services() {
-     const { data: services = [], isPending } = useQuery(getServices());
+     const { data: services = [], isPending } = useQuery(getAllService());
 
 
 

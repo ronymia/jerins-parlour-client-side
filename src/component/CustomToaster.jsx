@@ -4,9 +4,9 @@ export default function CustomToaster({
     t,
     type,
     text,
-    errors ,
+    errors = [],
 }) {
-    console.log(errors);
+    // console.log(errors);
     return (
         <div>
             {
@@ -15,11 +15,11 @@ export default function CustomToaster({
                         <h3>There is Some errors array :</h3>
                         <ul>
                             {
-                                    errors.map((errorMessage, index) => 
-                                        <li key={`${index}`}
+                                errors.map((errorMessage, index) =>
+                                    <li key={`${index}`}
                                         className="text-red-900"
-                                        >{errorMessage}</li>
-                                    )                         
+                                    >{errorMessage}</li>
+                                )
                             }
                         </ul>
                     </>)

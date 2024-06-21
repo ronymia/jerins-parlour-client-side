@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React, { useState, useEffect, useRef } from "react";
 
-export default function CustomDropdown({ label, dropdownItems }) {
+export default function CustomDropdown({ label = "Select", dropdownItems }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const dropdownRef = useRef(null);
@@ -24,16 +24,20 @@ export default function CustomDropdown({ label, dropdownItems }) {
   };
 
   const handleItemClick = (item) => {
-    setSelectedItem(item);
+    // setSelectedItem(item);
     setIsOpen(false);
   };
 
   return (
-    <div ref={dropdownRef} className="inline-block relative">
-      <div className="py-2 px-3 bg-[#f0f0f0] border border-[#ccc]" onClick={toggleDropdown}>
-        {selectedItem || label}
-      </div>
-      <div className={`absolute ${isOpen ? "flex" : "hidden"} top-[calc(100% + 4px)] left-0 bg-white border border-solid border-[#ccc] border-t-0 shadow-[0px 4px 8px rgba(0, 0, 0, 0.1)] max-h-[200px]`}>
+    <div ref={dropdownRef} className="inline-block relative w-44">
+      <button
+        type="button"
+        className="btn btn-outline w-full" onClick={toggleDropdown}>
+        {label}
+      </button>
+      {isOpen && <div
+        role="menubar"
+        className={`absolute w-full cursor-pointer bg-white border border-solid border-[#ccc] border-t-0 shadow-[0px 4px 8px rgba(0, 0, 0, 0.1)] `}>
         {dropdownItems?.map((item) => (
           <div
             key={item}
@@ -43,7 +47,7 @@ export default function CustomDropdown({ label, dropdownItems }) {
             {item}
           </div>
         ))}
-      </div>
+      </div>}
     </div>
   );
 }

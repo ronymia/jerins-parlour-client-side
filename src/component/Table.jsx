@@ -1,17 +1,79 @@
+import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
 
-export default function Table() {
+export default function Table({
+    actions,
+}) {
+    const table = useReactTable({
+        columns,
+        data: orderList,
+        getCoreRowModel: getCoreRowModel(),
+    })
+
     return (
         <>
+            {/* TABLE */}
             <table>
-                {/* Table Header */}
+                {/* TABLE HEADER  */}
                 <thead>
-                    <h1>Header</h1>
+                    {table.getHeaderGroups().map(headerGroup => (
+                        <tr key={headerGroup.id}>
+                            {headerGroup.headers.map(header => (
+                                <th key={header.id}>
+                                    {header.isPlaceholder
+                                        ? null
+                                        : flexRender(
+                                            header.column.columnDef.header,
+                                            header.getContext()
+                                        )}
+                                </th>
+                            ))}
+                            {/* TABLE ACTIONS COLUMNS  */}
+                            {actions && <th>Action</th>}
+                        </tr>
+                    ))}
                 </thead>
-
-                {/* TABLE BODY */}
+                {/* TABLE BODY  */}
                 <tbody>
-                    <h2>Table body</h2>
+                    {table.getRowModel().rows.map(row => (
+                        <tr key={row.id}>
+                            {row.getVisibleCells().map(cell => (
+                                <td key={cell.id}>
+                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                </td>
+                            ))}
+
+                            {/* TABLE ACTIONS BUTTONS  */}
+                            {actions &&
+                                <td>
+                                    <button
+                                        type="button"
+                                        onClick={() => console.log(row.original)}
+                                    >Edit
+                                    </button>
+                                    <button
+                                        onClick={() => console.log(row.original)}
+                                    >Delete
+                                    </button>
+                                </td>}
+                        </tr>
+                    ))}
                 </tbody>
+                {/* <tfoot>
+                         {table.getFooterGroups().map(footerGroup => (
+                              <tr key={footerGroup.id}>
+                                   {footerGroup.headers.map(header => (
+                                        <th key={header.id}>
+                                             {header.isPlaceholder
+                                                  ? null
+                                                  : flexRender(
+                                                       header.column.columnDef.footer,
+                                                       header.getContext()
+                                                  )}
+                                        </th>
+                                   ))}
+                              </tr>
+                         ))}
+                    </tfoot> */}
             </table>
         </>
     )

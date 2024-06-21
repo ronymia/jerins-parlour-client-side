@@ -3,6 +3,7 @@ import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import CustomInputField from '../../../component/HookFormInputFields/ControllerInputField';
 import InputFieldArray from '../../../component/HookFormInputFields/InputFieldArray';
 import ControllerInputField from '../../../component/HookFormInputFields/ControllerInputField';
+import CustomNumberField from '../../../component/InputFields/CustomNumberField';
 // import { CustomInputField, CustomNumberField } from '../../../component/InputFields';
 
 export default function Contact() {
@@ -34,7 +35,7 @@ export default function Contact() {
      const onSubmit = (data) => {
           console.log(data); // Handle form submission
           // form to state
-          setFormData({...formData, ...data});
+          setFormData({ ...formData, ...data });
      };
      // console.log(formData)
 
@@ -85,7 +86,7 @@ export default function Contact() {
                               id={"phone_number"}
                               name={"phone_number"}
                               // value={formData?.phone_number}
-                              error={formErrors?.phone_number}
+                              // error={formErrors?.phone_number}
                               defaultValue={formData?.phone_number}
                               placeholder={"Phone Number"}
                               // onChange={handleInputChange}

@@ -1,3 +1,4 @@
+import React, { useRef } from "react";
 
 export default function CustomInputField({
     required = false,
@@ -9,12 +10,18 @@ export default function CustomInputField({
     value,
     label,
     defaultValue,
+    min,
+    max,
+    minLength,
+    maxLength,
     placeholder,
     onChange,
     onBlur,
     error,
     className
 }) {
+    const inputRef = React.useRef();
+
     return (
         <div className="flex flex-col gap-y-2">
             {/* LABEL */}
@@ -36,7 +43,12 @@ export default function CustomInputField({
                 name={name}
                 value={value}
                 defaultValue={defaultValue}
+                min={min}
+                max={max}
+                minLength={minLength}
+                maxLength={maxLength}
                 placeholder={placeholder}
+                ref={inputRef}
                 onChange={onChange}
                 onBlur={onBlur}
                 className={className}
